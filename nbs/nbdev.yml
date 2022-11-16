@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "spotify-completist"
+  site-url: "https://januff.github.io/spotify-completist"
+  description: "listening app with Spotipy library"
+  repo-branch: main
+  repo-url: "https://github.com/januff/spotify-completist"
