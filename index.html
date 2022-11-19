@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="listening app with Spotipy library">
+
+<title>spotify-completist</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="spotify-completist">
+<meta property="og:description" content="listening app with Spotipy library">
+<meta property="og:site-name" content="spotify-completist">
+<meta name="twitter:title" content="spotify-completist">
+<meta name="twitter:description" content="listening app with Spotipy library">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">spotify-completist</span>
+    </a>
+  </div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">spotify-completist</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">spotify-completist</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">core</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#import-spotify" id="toc-import-spotify" class="nav-link active" data-scroll-target="#import-spotify">Import Spotify</a></li>
+  <li><a href="#fetching-all-of-my-playlists" id="toc-fetching-all-of-my-playlists" class="nav-link" data-scroll-target="#fetching-all-of-my-playlists">Fetching all of my playlists</a></li>
+  <li><a href="#getting-a-specific-playlist" id="toc-getting-a-specific-playlist" class="nav-link" data-scroll-target="#getting-a-specific-playlist">Getting A Specific Playlist</a></li>
+  <li><a href="#turning-json-into-pandas-dataframe" id="toc-turning-json-into-pandas-dataframe" class="nav-link" data-scroll-target="#turning-json-into-pandas-dataframe">Turning JSON into Pandas Dataframe</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/januff/spotify-completist/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">spotify-completist</h1>
+</div>
+
+<div>
+  <div class="description">
+    listening app with Spotipy library
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="import-spotify" class="level2">
+<h2 class="anchored" data-anchor-id="import-spotify">Import Spotify</h2>
+</section>
+<section id="fetching-all-of-my-playlists" class="level2">
+<h2 class="anchored" data-anchor-id="fetching-all-of-my-playlists">Fetching all of my playlists</h2>
+<pre><code>[{'collaborative': False,
+  'description': 'Took me four months to listen to everything: 72 playlists&amp;#x2F;2,230 songs. I hearted many more, but these I really love.',
+  'external_urls': {'spotify': 'https://open.spotify.com/playlist/4dBFbr2S6knmUQcSmEbKzn'},
+  'href': 'https://api.spotify.com/v1/playlists/4dBFbr2S6knmUQcSmEbKzn',
+  'id': '4dBFbr2S6knmUQcSmEbKzn',
+  'images': [{'height': None,
+    'url': 'https://i.scdn.co/image/ab67706c0000bebb545f7234a2d257a450ae5082',
+    'width': None}],
+  'name': '@danstrachota 2016-2022 Mixdown',
+  'owner': {'display_name': 'Joey Anuff',
+   'external_urls': {'spotify': 'https://open.spotify.com/user/criticalmetrics'},
+   'href': 'https://api.spotify.com/v1/users/criticalmetrics',
+   'id': 'criticalmetrics',
+   'type': 'user',
+   'uri': 'spotify:user:criticalmetrics'},
+  'primary_color': None,
+  'public': True,
+  'snapshot_id': 'MjAxLGRiMjk2OGVkMzkwODc4NTVhMDVhMTI1MzAyNDg1MDJiNmY4MzIyMzU=',
+  'tracks': {'href': 'https://api.spotify.com/v1/playlists/4dBFbr2S6knmUQcSmEbKzn/tracks',
+   'total': 55},
+  'type': 'playlist',
+  'uri': 'spotify:playlist:4dBFbr2S6knmUQcSmEbKzn'}]</code></pre>
+</section>
+<section id="getting-a-specific-playlist" class="level2">
+<h2 class="anchored" data-anchor-id="getting-a-specific-playlist">Getting A Specific Playlist</h2>
+<p>Chime School, Wait Your Turn Rolling Blackouts Coastal Fever, She’s There Jeanines, Who’s In The Dark Ezrat, I Know What That’s Like The Ashenden Papers, The River Highway Sonny Smith, Pictures of You The Goon Sax, She Knows Chime School, Fixing Motorcycles The Boys With The Perpetual Nervousness, Turning Red Ginnels, Settle Down Mood Six, What Have You Ever Done? Dead Famous People, Barlow’s House Close Lobsters, Going To Heaven To See If It Rains Primal Scream, Gentle Tuesday Pavo Pavo, Mystery Hour SASAMI, Not The Time Young Guv, Too Far Gone Dummy, Daffodils Volage, Horses Aquaserge, Virage sud M. Ward, Migration of Souls Shy Boys, Something Sweet Pist Idiots, Juliette Stephen Becker, Unspoken Juan Wauters, Letter Paul Kelly, Before Too Long Simon Doom, You Can’t Be Real Cende, Bed Sam Evian, Need You James Swanberg, It’s No Wonder Papercuts, I Want My Jacket Back Twin Peaks, Walk to the One You Love Lewsberg, Cold Light of Day Nap Eyes, Every Time the Feeling Scott &amp; Charlene’s Wedding, Outside World PAINT, Splattered Vanishing Twin, Telescope Exploded View, Summer Came Early Whyte Horses, Empty Words Elle Músa, Mango Pops Clara Luciani, On ne meurt pas d’amour Gwenno, Tir Ha mor The Ophelias, Fog Coco, Last of the Loving Half Stack, Know You Well Drahla, Silk Spirit Dumb, Pull Me Up Terry, Rio Omni, Equestrian Blumentopf, Safari The UMC’s, One To Grow On Barney Artist, 93 Ata Kak, Yemmpa Aba Volta Jazz, Djougou Toro Ayalew Mesfin, Hasabe (My Worries)</p>
+</section>
+<section id="turning-json-into-pandas-dataframe" class="level2">
+<h2 class="anchored" data-anchor-id="turning-json-into-pandas-dataframe">Turning JSON into Pandas Dataframe</h2>
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>artist_id</th>
+      <th>artist_name</th>
+      <th>track_name</th>
+      <th>track_id</th>
+      <th>track_duration_ms</th>
+      <th>track_popularity</th>
+      <th>track_preview_url</th>
+      <th>track_image_url</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>Chime School</td>
+      <td>Wait Your Turn</td>
+      <td>5Z37d9IferQIvubtWWWhe0</td>
+      <td>236676</td>
+      <td>9</td>
+      <td>https://p.scdn.co/mp3-preview/878ed5ce7b1b3f00...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>65mMkD9WW39U9Yadv0dWUF</td>
+      <td>Rolling Blackouts Coastal Fever</td>
+      <td>She's There</td>
+      <td>10rRY5gfdeIHVJJVqSvbV7</td>
+      <td>224334</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>Jeanines</td>
+      <td>Who's In The Dark</td>
+      <td>4oEj0Jju4kHyj24uVIMmQj</td>
+      <td>84000</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/355597ca5e755492...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>Ezrat</td>
+      <td>I Know What That's Like</td>
+      <td>1gZsSsKOWa7jLdHlG1ttvP</td>
+      <td>171102</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/96acc28fb8328dd3...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>The Ashenden Papers</td>
+      <td>The River Highway</td>
+      <td>57XK9jbD6kQzprvQWlOruJ</td>
+      <td>185189</td>
+      <td>0</td>
+      <td>https://p.scdn.co/mp3-preview/175fcba4f5cb241b...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>artist.href</th>
+      <th>artist.id</th>
+      <th>artist.name</th>
+      <th>artist.type</th>
+      <th>artist.uri</th>
+      <th>artist.external_urls.spotify</th>
+      <th>track.name</th>
+      <th>track.album</th>
+      <th>track.id</th>
+      <th>track.duration_ms</th>
+      <th>track.popularity</th>
+      <th>track.preview_url</th>
+      <th>cover</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>https://api.spotify.com/v1/artists/4GBgN14vJ7U...</td>
+      <td>4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>Chime School</td>
+      <td>artist</td>
+      <td>spotify:artist:4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>https://open.spotify.com/artist/4GBgN14vJ7UQYU...</td>
+      <td>Wait Your Turn</td>
+      <td>{'album_type': 'album', 'artists': [{'external...</td>
+      <td>5Z37d9IferQIvubtWWWhe0</td>
+      <td>236676</td>
+      <td>9</td>
+      <td>https://p.scdn.co/mp3-preview/878ed5ce7b1b3f00...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>https://api.spotify.com/v1/artists/65mMkD9WW39...</td>
+      <td>65mMkD9WW39U9Yadv0dWUF</td>
+      <td>Rolling Blackouts Coastal Fever</td>
+      <td>artist</td>
+      <td>spotify:artist:65mMkD9WW39U9Yadv0dWUF</td>
+      <td>https://open.spotify.com/artist/65mMkD9WW39U9Y...</td>
+      <td>She's There</td>
+      <td>{'album_type': 'album', 'artists': [{'external...</td>
+      <td>10rRY5gfdeIHVJJVqSvbV7</td>
+      <td>224334</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>https://api.spotify.com/v1/artists/4brlhKgPDyI...</td>
+      <td>4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>Jeanines</td>
+      <td>artist</td>
+      <td>spotify:artist:4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>https://open.spotify.com/artist/4brlhKgPDyI5xP...</td>
+      <td>Who's In The Dark</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>4oEj0Jju4kHyj24uVIMmQj</td>
+      <td>84000</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/355597ca5e755492...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>https://api.spotify.com/v1/artists/0WTobI5t4W2...</td>
+      <td>0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>Ezrat</td>
+      <td>artist</td>
+      <td>spotify:artist:0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>https://open.spotify.com/artist/0WTobI5t4W2M1G...</td>
+      <td>I Know What That's Like</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>1gZsSsKOWa7jLdHlG1ttvP</td>
+      <td>171102</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/96acc28fb8328dd3...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>https://api.spotify.com/v1/artists/6xoHdsyiomy...</td>
+      <td>6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>The Ashenden Papers</td>
+      <td>artist</td>
+      <td>spotify:artist:6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>https://open.spotify.com/artist/6xoHdsyiomygIK...</td>
+      <td>The River Highway</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>57XK9jbD6kQzprvQWlOruJ</td>
+      <td>185189</td>
+      <td>0</td>
+      <td>https://p.scdn.co/mp3-preview/175fcba4f5cb241b...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>artist.href</th>
+      <th>artist.id</th>
+      <th>artist.name</th>
+      <th>artist.type</th>
+      <th>artist.uri</th>
+      <th>artist.external_urls.spotify</th>
+      <th>track.name</th>
+      <th>track.album</th>
+      <th>track.id</th>
+      <th>track.duration_ms</th>
+      <th>track.popularity</th>
+      <th>track.preview_url</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>https://api.spotify.com/v1/artists/4GBgN14vJ7U...</td>
+      <td>4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>Chime School</td>
+      <td>artist</td>
+      <td>spotify:artist:4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>https://open.spotify.com/artist/4GBgN14vJ7UQYU...</td>
+      <td>Wait Your Turn</td>
+      <td>{'album_type': 'album', 'artists': [{'external...</td>
+      <td>5Z37d9IferQIvubtWWWhe0</td>
+      <td>236676</td>
+      <td>9</td>
+      <td>https://p.scdn.co/mp3-preview/878ed5ce7b1b3f00...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>https://api.spotify.com/v1/artists/65mMkD9WW39...</td>
+      <td>65mMkD9WW39U9Yadv0dWUF</td>
+      <td>Rolling Blackouts Coastal Fever</td>
+      <td>artist</td>
+      <td>spotify:artist:65mMkD9WW39U9Yadv0dWUF</td>
+      <td>https://open.spotify.com/artist/65mMkD9WW39U9Y...</td>
+      <td>She's There</td>
+      <td>{'album_type': 'album', 'artists': [{'external...</td>
+      <td>10rRY5gfdeIHVJJVqSvbV7</td>
+      <td>224334</td>
+      <td>0</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>https://api.spotify.com/v1/artists/4brlhKgPDyI...</td>
+      <td>4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>Jeanines</td>
+      <td>artist</td>
+      <td>spotify:artist:4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>https://open.spotify.com/artist/4brlhKgPDyI5xP...</td>
+      <td>Who's In The Dark</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>4oEj0Jju4kHyj24uVIMmQj</td>
+      <td>84000</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/355597ca5e755492...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>https://api.spotify.com/v1/artists/0WTobI5t4W2...</td>
+      <td>0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>Ezrat</td>
+      <td>artist</td>
+      <td>spotify:artist:0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>https://open.spotify.com/artist/0WTobI5t4W2M1G...</td>
+      <td>I Know What That's Like</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>1gZsSsKOWa7jLdHlG1ttvP</td>
+      <td>171102</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/96acc28fb8328dd3...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>https://api.spotify.com/v1/artists/6xoHdsyiomy...</td>
+      <td>6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>The Ashenden Papers</td>
+      <td>artist</td>
+      <td>spotify:artist:6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>https://open.spotify.com/artist/6xoHdsyiomygIK...</td>
+      <td>The River Highway</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>57XK9jbD6kQzprvQWlOruJ</td>
+      <td>185189</td>
+      <td>0</td>
+      <td>https://p.scdn.co/mp3-preview/175fcba4f5cb241b...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code>/var/folders/7h/d_pnsmpx3n30v0pzdm_02_dm0000gn/T/ipykernel_73222/953428268.py:4: FutureWarning: The default value of regex will change from True to False in a future version.
+  image_fix['track.image.html'] = image_fix['cover']\</code></pre>
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>artist.href</th>
+      <th>artist.id</th>
+      <th>artist.name</th>
+      <th>artist.type</th>
+      <th>artist.uri</th>
+      <th>artist.external_urls.spotify</th>
+      <th>track.name</th>
+      <th>track.album</th>
+      <th>track.id</th>
+      <th>track.duration_ms</th>
+      <th>track.popularity</th>
+      <th>track.preview_url</th>
+      <th>cover</th>
+      <th>track.image.html</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>https://api.spotify.com/v1/artists/4GBgN14vJ7U...</td>
+      <td>4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>Chime School</td>
+      <td>artist</td>
+      <td>spotify:artist:4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>https://open.spotify.com/artist/4GBgN14vJ7UQYU...</td>
+      <td>Wait Your Turn</td>
+      <td>{'album_type': 'album', 'artists': [{'external...</td>
+      <td>5Z37d9IferQIvubtWWWhe0</td>
+      <td>236676</td>
+      <td>9</td>
+      <td>https://p.scdn.co/mp3-preview/878ed5ce7b1b3f00...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+      <td>&lt;img src="https://i.scdn.co/image/ab67616d0000...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>https://api.spotify.com/v1/artists/65mMkD9WW39...</td>
+      <td>65mMkD9WW39U9Yadv0dWUF</td>
+      <td>Rolling Blackouts Coastal Fever</td>
+      <td>artist</td>
+      <td>spotify:artist:65mMkD9WW39U9Yadv0dWUF</td>
+      <td>https://open.spotify.com/artist/65mMkD9WW39U9Y...</td>
+      <td>She's There</td>
+      <td>{'album_type': 'album', 'artists': [{'external...</td>
+      <td>10rRY5gfdeIHVJJVqSvbV7</td>
+      <td>224334</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+      <td>&lt;img src="https://i.scdn.co/image/ab67616d0000...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>https://api.spotify.com/v1/artists/4brlhKgPDyI...</td>
+      <td>4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>Jeanines</td>
+      <td>artist</td>
+      <td>spotify:artist:4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>https://open.spotify.com/artist/4brlhKgPDyI5xP...</td>
+      <td>Who's In The Dark</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>4oEj0Jju4kHyj24uVIMmQj</td>
+      <td>84000</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/355597ca5e755492...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+      <td>&lt;img src="https://i.scdn.co/image/ab67616d0000...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>https://api.spotify.com/v1/artists/0WTobI5t4W2...</td>
+      <td>0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>Ezrat</td>
+      <td>artist</td>
+      <td>spotify:artist:0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>https://open.spotify.com/artist/0WTobI5t4W2M1G...</td>
+      <td>I Know What That's Like</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>1gZsSsKOWa7jLdHlG1ttvP</td>
+      <td>171102</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/96acc28fb8328dd3...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+      <td>&lt;img src="https://i.scdn.co/image/ab67616d0000...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>https://api.spotify.com/v1/artists/6xoHdsyiomy...</td>
+      <td>6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>The Ashenden Papers</td>
+      <td>artist</td>
+      <td>spotify:artist:6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>https://open.spotify.com/artist/6xoHdsyiomygIK...</td>
+      <td>The River Highway</td>
+      <td>{'album_type': 'single', 'artists': [{'externa...</td>
+      <td>57XK9jbD6kQzprvQWlOruJ</td>
+      <td>185189</td>
+      <td>0</td>
+      <td>https://p.scdn.co/mp3-preview/175fcba4f5cb241b...</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358...</td>
+      <td>&lt;img src="https://i.scdn.co/image/ab67616d0000...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>print(out.tbl_row([’‘,’Artist’,‘Song Name’])) print(out.tbl_sep([1,3,4]))</p>
+<div class="border">
+<p>This content can be styled with a border</p>
+</div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>artist.href</th>
+      <th>artist.id</th>
+      <th>artist.name</th>
+      <th>artist.type</th>
+      <th>artist.uri</th>
+      <th>artist.external_urls.spotify</th>
+      <th>track.name</th>
+      <th>track.album</th>
+      <th>track.id</th>
+      <th>track.duration_ms</th>
+      <th>track.popularity</th>
+      <th>track.preview_url</th>
+      <th>cover</th>
+      <th>track.image.html</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>https://api.spotify.com/v1/artists/4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>Chime School</td>
+      <td>artist</td>
+      <td>spotify:artist:4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>https://open.spotify.com/artist/4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>Wait Your Turn</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4GBgN14vJ7UQYUebQk0hJa'}, 'href': 'https://api.spotify.com/v1/artists/4GBgN14vJ7UQYUebQk0hJa', 'id': '4GBgN14vJ7UQYUebQk0hJa', 'name': 'Chime School', 'type': 'artist', 'uri': 'spotify:artist:4GBgN14vJ7UQYUebQk0hJa'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/0tWvQ4CKz0CcCCqy6RGNep'}, 'href': 'https://api.spotify.com/v1/albums/0tWvQ4CKz0CcCCqy6RGNep', 'id': '0tWvQ4CKz0CcCCqy6RGNep', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02f48358466b52e772be89afa4', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851f48358466b52e772be89afa4', 'width': 64}], 'name': 'Chime School', 'release_date': '2021-11-05', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:0tWvQ4CKz0CcCCqy6RGNep'}</td>
+      <td>5Z37d9IferQIvubtWWWhe0</td>
+      <td>236676</td>
+      <td>9</td>
+      <td>https://p.scdn.co/mp3-preview/878ed5ce7b1b3f009275d6bcdb89fa9180b1a79d?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>https://api.spotify.com/v1/artists/65mMkD9WW39U9Yadv0dWUF</td>
+      <td>65mMkD9WW39U9Yadv0dWUF</td>
+      <td>Rolling Blackouts Coastal Fever</td>
+      <td>artist</td>
+      <td>spotify:artist:65mMkD9WW39U9Yadv0dWUF</td>
+      <td>https://open.spotify.com/artist/65mMkD9WW39U9Yadv0dWUF</td>
+      <td>She's There</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/65mMkD9WW39U9Yadv0dWUF'}, 'href': 'https://api.spotify.com/v1/artists/65mMkD9WW39U9Yadv0dWUF', 'id': '65mMkD9WW39U9Yadv0dWUF', 'name': 'Rolling Blackouts Coastal Fever', 'type': 'artist', 'uri': 'spotify:artist:65mMkD9WW39U9Yadv0dWUF'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/1OzdsJy52aBL2JftPLwRS0'}, 'href': 'https://api.spotify.com/v1/albums/1OzdsJy52aBL2JftPLwRS0', 'id': '1OzdsJy52aBL2JftPLwRS0', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27341a823d59c5b8bc731bc646b', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0241a823d59c5b8bc731bc646b', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485141a823d59c5b8bc731bc646b', 'width': 64}], 'name': 'Sideways to New Italy', 'release_date': '2020-06-05', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:1OzdsJy52aBL2JftPLwRS0'}</td>
+      <td>10rRY5gfdeIHVJJVqSvbV7</td>
+      <td>224334</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>https://api.spotify.com/v1/artists/4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>Jeanines</td>
+      <td>artist</td>
+      <td>spotify:artist:4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>https://open.spotify.com/artist/4brlhKgPDyI5xPbmRFm8eZ</td>
+      <td>Who's In The Dark</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4brlhKgPDyI5xPbmRFm8eZ'}, 'href': 'https://api.spotify.com/v1/artists/4brlhKgPDyI5xPbmRFm8eZ', 'id': '4brlhKgPDyI5xPbmRFm8eZ', 'name': 'Jeanines', 'type': 'artist', 'uri': 'spotify:artist:4brlhKgPDyI5xPbmRFm8eZ'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/2px4ShdkQVZvlNoeDWi1uM'}, 'href': 'https://api.spotify.com/v1/albums/2px4ShdkQVZvlNoeDWi1uM', 'id': '2px4ShdkQVZvlNoeDWi1uM', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2732638e19905965ad419befe15', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e022638e19905965ad419befe15', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048512638e19905965ad419befe15', 'width': 64}], 'name': 'Who's In The Dark', 'release_date': '2022-04-06', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:2px4ShdkQVZvlNoeDWi1uM'}</td>
+      <td>4oEj0Jju4kHyj24uVIMmQj</td>
+      <td>84000</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/355597ca5e7554921d088e526aebae7c1e89c2db?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>https://api.spotify.com/v1/artists/0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>Ezrat</td>
+      <td>artist</td>
+      <td>spotify:artist:0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>https://open.spotify.com/artist/0WTobI5t4W2M1G9mNNUbR8</td>
+      <td>I Know What That's Like</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/0WTobI5t4W2M1G9mNNUbR8'}, 'href': 'https://api.spotify.com/v1/artists/0WTobI5t4W2M1G9mNNUbR8', 'id': '0WTobI5t4W2M1G9mNNUbR8', 'name': 'Ezrat', 'type': 'artist', 'uri': 'spotify:artist:0WTobI5t4W2M1G9mNNUbR8'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/4PEaMQ1sIiJEaW8oNXkpOj'}, 'href': 'https://api.spotify.com/v1/albums/4PEaMQ1sIiJEaW8oNXkpOj', 'id': '4PEaMQ1sIiJEaW8oNXkpOj', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2739796683568c3dd4e32c337eb', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e029796683568c3dd4e32c337eb', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048519796683568c3dd4e32c337eb', 'width': 64}], 'name': 'I Know What That's Like', 'release_date': '2021-08-04', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:4PEaMQ1sIiJEaW8oNXkpOj'}</td>
+      <td>1gZsSsKOWa7jLdHlG1ttvP</td>
+      <td>171102</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/96acc28fb8328dd3505b07fdd7017faf4b1d53b6?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>https://api.spotify.com/v1/artists/6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>The Ashenden Papers</td>
+      <td>artist</td>
+      <td>spotify:artist:6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>https://open.spotify.com/artist/6xoHdsyiomygIKZ00Rd8oc</td>
+      <td>The River Highway</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/6xoHdsyiomygIKZ00Rd8oc'}, 'href': 'https://api.spotify.com/v1/artists/6xoHdsyiomygIKZ00Rd8oc', 'id': '6xoHdsyiomygIKZ00Rd8oc', 'name': 'The Ashenden Papers', 'type': 'artist', 'uri': 'spotify:artist:6xoHdsyiomygIKZ00Rd8oc'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/0a8ZP3UTXqVLLtqIUFV8pS'}, 'href': 'https://api.spotify.com/v1/albums/0a8ZP3UTXqVLLtqIUFV8pS', 'id': '0a8ZP3UTXqVLLtqIUFV8pS', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2730deaa0f512c8611fc48fcdab', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e020deaa0f512c8611fc48fcdab', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048510deaa0f512c8611fc48fcdab', 'width': 64}], 'name': 'Spring', 'release_date': '2022-06-14', 'release_date_precision': 'day', 'total_tracks': 2, 'type': 'album', 'uri': 'spotify:album:0a8ZP3UTXqVLLtqIUFV8pS'}</td>
+      <td>57XK9jbD6kQzprvQWlOruJ</td>
+      <td>185189</td>
+      <td>0</td>
+      <td>https://p.scdn.co/mp3-preview/175fcba4f5cb241bd8b9b442266da363ccffad07?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>https://api.spotify.com/v1/artists/189npwiCoBxlFNEDfiOtqu</td>
+      <td>189npwiCoBxlFNEDfiOtqu</td>
+      <td>Sonny Smith</td>
+      <td>artist</td>
+      <td>spotify:artist:189npwiCoBxlFNEDfiOtqu</td>
+      <td>https://open.spotify.com/artist/189npwiCoBxlFNEDfiOtqu</td>
+      <td>Pictures of You</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/189npwiCoBxlFNEDfiOtqu'}, 'href': 'https://api.spotify.com/v1/artists/189npwiCoBxlFNEDfiOtqu', 'id': '189npwiCoBxlFNEDfiOtqu', 'name': 'Sonny Smith', 'type': 'artist', 'uri': 'spotify:artist:189npwiCoBxlFNEDfiOtqu'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/7t0T4F3LinVSD54KIsOMWU'}, 'href': 'https://api.spotify.com/v1/albums/7t0T4F3LinVSD54KIsOMWU', 'id': '7t0T4F3LinVSD54KIsOMWU', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273b15ac5305ff175282f934d43', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02b15ac5305ff175282f934d43', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851b15ac5305ff175282f934d43', 'width': 64}], 'name': 'Rod for Your Love', 'release_date': '2018-03-02', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:7t0T4F3LinVSD54KIsOMWU'}</td>
+      <td>7EnzJR5AF8eCbDP9YAb5sq</td>
+      <td>154720</td>
+      <td>13</td>
+      <td>https://p.scdn.co/mp3-preview/4276191756e949112c4412b63c0450ec11fb57bf?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>https://api.spotify.com/v1/artists/7qtF58vGfOhD4z3yzrD9PD</td>
+      <td>7qtF58vGfOhD4z3yzrD9PD</td>
+      <td>The Goon Sax</td>
+      <td>artist</td>
+      <td>spotify:artist:7qtF58vGfOhD4z3yzrD9PD</td>
+      <td>https://open.spotify.com/artist/7qtF58vGfOhD4z3yzrD9PD</td>
+      <td>She Knows</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/7qtF58vGfOhD4z3yzrD9PD'}, 'href': 'https://api.spotify.com/v1/artists/7qtF58vGfOhD4z3yzrD9PD', 'id': '7qtF58vGfOhD4z3yzrD9PD', 'name': 'The Goon Sax', 'type': 'artist', 'uri': 'spotify:artist:7qtF58vGfOhD4z3yzrD9PD'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/7A0xuC7gv4LdD0lm84AvKE'}, 'href': 'https://api.spotify.com/v1/albums/7A0xuC7gv4LdD0lm84AvKE', 'id': '7A0xuC7gv4LdD0lm84AvKE', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27352dacfae473cf13f32575835', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0252dacfae473cf13f32575835', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485152dacfae473cf13f32575835', 'width': 64}], 'name': 'We're Not Talking', 'release_date': '2018-09-14', 'release_date_precision': 'day', 'total_tracks': 12, 'type': 'album', 'uri': 'spotify:album:7A0xuC7gv4LdD0lm84AvKE'}</td>
+      <td>5RFGl9nfesnrNXwo6yF32R</td>
+      <td>152826</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>https://api.spotify.com/v1/artists/4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>Chime School</td>
+      <td>artist</td>
+      <td>spotify:artist:4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>https://open.spotify.com/artist/4GBgN14vJ7UQYUebQk0hJa</td>
+      <td>Fixing Motorcycles</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4GBgN14vJ7UQYUebQk0hJa'}, 'href': 'https://api.spotify.com/v1/artists/4GBgN14vJ7UQYUebQk0hJa', 'id': '4GBgN14vJ7UQYUebQk0hJa', 'name': 'Chime School', 'type': 'artist', 'uri': 'spotify:artist:4GBgN14vJ7UQYUebQk0hJa'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/0tWvQ4CKz0CcCCqy6RGNep'}, 'href': 'https://api.spotify.com/v1/albums/0tWvQ4CKz0CcCCqy6RGNep', 'id': '0tWvQ4CKz0CcCCqy6RGNep', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02f48358466b52e772be89afa4', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851f48358466b52e772be89afa4', 'width': 64}], 'name': 'Chime School', 'release_date': '2021-11-05', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:0tWvQ4CKz0CcCCqy6RGNep'}</td>
+      <td>3N2MsmzCF5ABhyawEuSuaP</td>
+      <td>202715</td>
+      <td>5</td>
+      <td>https://p.scdn.co/mp3-preview/2b41d341ed7893ea973b9857c1fd175621bd188c?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>https://api.spotify.com/v1/artists/5E5Q0OsMfowJVJeIvDEKtU</td>
+      <td>5E5Q0OsMfowJVJeIvDEKtU</td>
+      <td>The Boys With The Perpetual Nervousness</td>
+      <td>artist</td>
+      <td>spotify:artist:5E5Q0OsMfowJVJeIvDEKtU</td>
+      <td>https://open.spotify.com/artist/5E5Q0OsMfowJVJeIvDEKtU</td>
+      <td>Turning Red</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/5E5Q0OsMfowJVJeIvDEKtU'}, 'href': 'https://api.spotify.com/v1/artists/5E5Q0OsMfowJVJeIvDEKtU', 'id': '5E5Q0OsMfowJVJeIvDEKtU', 'name': 'The Boys With The Perpetual Nervousness', 'type': 'artist', 'uri': 'spotify:artist:5E5Q0OsMfowJVJeIvDEKtU'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/6pqgNeoLbX0far69Ix9gwT'}, 'href': 'https://api.spotify.com/v1/albums/6pqgNeoLbX0far69Ix9gwT', 'id': '6pqgNeoLbX0far69Ix9gwT', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273baabe6288f21e0aba6a6f55b', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02baabe6288f21e0aba6a6f55b', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851baabe6288f21e0aba6a6f55b', 'width': 64}], 'name': 'Turning Red', 'release_date': '2022-06-03', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:6pqgNeoLbX0far69Ix9gwT'}</td>
+      <td>0pcRMSRtzQ34U17x0TIkQk</td>
+      <td>134681</td>
+      <td>5</td>
+      <td>https://p.scdn.co/mp3-preview/4d2d0d6891c301238f819b7f84c7787b34465673?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>https://api.spotify.com/v1/artists/4J65evGrqZMfAbQzq13U5u</td>
+      <td>4J65evGrqZMfAbQzq13U5u</td>
+      <td>Ginnels</td>
+      <td>artist</td>
+      <td>spotify:artist:4J65evGrqZMfAbQzq13U5u</td>
+      <td>https://open.spotify.com/artist/4J65evGrqZMfAbQzq13U5u</td>
+      <td>Settle Down</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4J65evGrqZMfAbQzq13U5u'}, 'href': 'https://api.spotify.com/v1/artists/4J65evGrqZMfAbQzq13U5u', 'id': '4J65evGrqZMfAbQzq13U5u', 'name': 'Ginnels', 'type': 'artist', 'uri': 'spotify:artist:4J65evGrqZMfAbQzq13U5u'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/6LQFL7VDgJmNlwUUmOlqS6'}, 'href': 'https://api.spotify.com/v1/albums/6LQFL7VDgJmNlwUUmOlqS6', 'id': '6LQFL7VDgJmNlwUUmOlqS6', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273ab269c9744708772613da8d8', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02ab269c9744708772613da8d8', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851ab269c9744708772613da8d8', 'width': 64}], 'name': 'A Country Life', 'release_date': '2014', 'release_date_precision': 'year', 'total_tracks': 14, 'type': 'album', 'uri': 'spotify:album:6LQFL7VDgJmNlwUUmOlqS6'}</td>
+      <td>0DzjOen6bS5j6w7GsMbNWi</td>
+      <td>193429</td>
+      <td>0</td>
+      <td>https://p.scdn.co/mp3-preview/4f9a4c970df4d13525a4a007457fad5647204684?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>https://api.spotify.com/v1/artists/1nP076MDGBAU3ZJkXSrQ74</td>
+      <td>1nP076MDGBAU3ZJkXSrQ74</td>
+      <td>Mood Six</td>
+      <td>artist</td>
+      <td>spotify:artist:1nP076MDGBAU3ZJkXSrQ74</td>
+      <td>https://open.spotify.com/artist/1nP076MDGBAU3ZJkXSrQ74</td>
+      <td>What Have You Ever Done?</td>
+      <td>{'album_type': 'compilation', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/0LyfQWJT6nXafLPZqxe9Of'}, 'href': 'https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of', 'id': '0LyfQWJT6nXafLPZqxe9Of', 'name': 'Various Artists', 'type': 'artist', 'uri': 'spotify:artist:0LyfQWJT6nXafLPZqxe9Of'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/6RZhECu1rTU6oEZXmoS3TN'}, 'href': 'https://api.spotify.com/v1/albums/6RZhECu1rTU6oEZXmoS3TN', 'id': '6RZhECu1rTU6oEZXmoS3TN', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2738d8a8e6a5d99fb3321f97d3b', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e028d8a8e6a5d99fb3321f97d3b', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048518d8a8e6a5d99fb3321f97d3b', 'width': 64}], 'name': 'Cherry Red Indie Hits: 1985-1986', 'release_date': '2014-07-17', 'release_date_precision': 'day', 'total_tracks': 15, 'type': 'album', 'uri': 'spotify:album:6RZhECu1rTU6oEZXmoS3TN'}</td>
+      <td>5f6JPhRk9IZYDLXPuUBXQo</td>
+      <td>140866</td>
+      <td>4</td>
+      <td>https://p.scdn.co/mp3-preview/e86306821324c15571791cb64ee9238db71507e2?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>https://api.spotify.com/v1/artists/3R6JWhh0dvSFVLS0E1rQSN</td>
+      <td>3R6JWhh0dvSFVLS0E1rQSN</td>
+      <td>Dead Famous People</td>
+      <td>artist</td>
+      <td>spotify:artist:3R6JWhh0dvSFVLS0E1rQSN</td>
+      <td>https://open.spotify.com/artist/3R6JWhh0dvSFVLS0E1rQSN</td>
+      <td>Barlow's House</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/3R6JWhh0dvSFVLS0E1rQSN'}, 'href': 'https://api.spotify.com/v1/artists/3R6JWhh0dvSFVLS0E1rQSN', 'id': '3R6JWhh0dvSFVLS0E1rQSN', 'name': 'Dead Famous People', 'type': 'artist', 'uri': 'spotify:artist:3R6JWhh0dvSFVLS0E1rQSN'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/5cjz6KuDeRDt4zTow2OEMH'}, 'href': 'https://api.spotify.com/v1/albums/5cjz6KuDeRDt4zTow2OEMH', 'id': '5cjz6KuDeRDt4zTow2OEMH', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2739b3e5c756946428dbdad1121', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e029b3e5c756946428dbdad1121', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048519b3e5c756946428dbdad1121', 'width': 64}], 'name': 'Lost Person's Area', 'release_date': '1986-12-01', 'release_date_precision': 'day', 'total_tracks': 5, 'type': 'album', 'uri': 'spotify:album:5cjz6KuDeRDt4zTow2OEMH'}</td>
+      <td>6Hi9M2HO1ufP3bTIZ1VN01</td>
+      <td>164440</td>
+      <td>3</td>
+      <td>https://p.scdn.co/mp3-preview/104fb56b317b74bd48730b5403cd7da3fd1d2677?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>https://api.spotify.com/v1/artists/6v8lYzIVcmeuPkoobFl7Dx</td>
+      <td>6v8lYzIVcmeuPkoobFl7Dx</td>
+      <td>Close Lobsters</td>
+      <td>artist</td>
+      <td>spotify:artist:6v8lYzIVcmeuPkoobFl7Dx</td>
+      <td>https://open.spotify.com/artist/6v8lYzIVcmeuPkoobFl7Dx</td>
+      <td>Going To Heaven To See If It Rains</td>
+      <td>{'album_type': 'compilation', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/6v8lYzIVcmeuPkoobFl7Dx'}, 'href': 'https://api.spotify.com/v1/artists/6v8lYzIVcmeuPkoobFl7Dx', 'id': '6v8lYzIVcmeuPkoobFl7Dx', 'name': 'Close Lobsters', 'type': 'artist', 'uri': 'spotify:artist:6v8lYzIVcmeuPkoobFl7Dx'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/19ZBKM6hIzXBBVvb66v9pT'}, 'href': 'https://api.spotify.com/v1/albums/19ZBKM6hIzXBBVvb66v9pT', 'id': '19ZBKM6hIzXBBVvb66v9pT', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27398087be034e181e24a45f63b', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0298087be034e181e24a45f63b', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485198087be034e181e24a45f63b', 'width': 64}], 'name': 'Forever Until Victory (The Singles Collection)', 'release_date': '2006', 'release_date_precision': 'year', 'total_tracks': 19, 'type': 'album', 'uri': 'spotify:album:19ZBKM6hIzXBBVvb66v9pT'}</td>
+      <td>7vfUEXq48PgG5xHGpYwruW</td>
+      <td>191626</td>
+      <td>13</td>
+      <td>https://p.scdn.co/mp3-preview/ae004be9636e72d743a1540111b8a19360c3eee3?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>https://api.spotify.com/v1/artists/3wury2nd8idV4GecUg5xze</td>
+      <td>3wury2nd8idV4GecUg5xze</td>
+      <td>Primal Scream</td>
+      <td>artist</td>
+      <td>spotify:artist:3wury2nd8idV4GecUg5xze</td>
+      <td>https://open.spotify.com/artist/3wury2nd8idV4GecUg5xze</td>
+      <td>Gentle Tuesday</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/3wury2nd8idV4GecUg5xze'}, 'href': 'https://api.spotify.com/v1/artists/3wury2nd8idV4GecUg5xze', 'id': '3wury2nd8idV4GecUg5xze', 'name': 'Primal Scream', 'type': 'artist', 'uri': 'spotify:artist:3wury2nd8idV4GecUg5xze'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/7KfDOHnBHXHfEghVgzlUsK'}, 'href': 'https://api.spotify.com/v1/albums/7KfDOHnBHXHfEghVgzlUsK', 'id': '7KfDOHnBHXHfEghVgzlUsK', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27319351a2fb3052c65151cca2d', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0219351a2fb3052c65151cca2d', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485119351a2fb3052c65151cca2d', 'width': 64}], 'name': 'Sonic Flower Groove', 'release_date': '1987-10-05', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:7KfDOHnBHXHfEghVgzlUsK'}</td>
+      <td>3DoVsoTmBNbPUIEZPNE1JX</td>
+      <td>227120</td>
+      <td>33</td>
+      <td>https://p.scdn.co/mp3-preview/a43407002bc95346654590581df6f5d50851a9c5?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>https://api.spotify.com/v1/artists/7k88Dlhtwm39gL3zLM70zf</td>
+      <td>7k88Dlhtwm39gL3zLM70zf</td>
+      <td>Pavo Pavo</td>
+      <td>artist</td>
+      <td>spotify:artist:7k88Dlhtwm39gL3zLM70zf</td>
+      <td>https://open.spotify.com/artist/7k88Dlhtwm39gL3zLM70zf</td>
+      <td>Mystery Hour</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/7k88Dlhtwm39gL3zLM70zf'}, 'href': 'https://api.spotify.com/v1/artists/7k88Dlhtwm39gL3zLM70zf', 'id': '7k88Dlhtwm39gL3zLM70zf', 'name': 'Pavo Pavo', 'type': 'artist', 'uri': 'spotify:artist:7k88Dlhtwm39gL3zLM70zf'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/6GLizaMd5SyskbulOdVRTP'}, 'href': 'https://api.spotify.com/v1/albums/6GLizaMd5SyskbulOdVRTP', 'id': '6GLizaMd5SyskbulOdVRTP', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27373c776ff1f40072152f89968', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0273c776ff1f40072152f89968', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485173c776ff1f40072152f89968', 'width': 64}], 'name': 'Mystery Hour', 'release_date': '2018-10-09', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:6GLizaMd5SyskbulOdVRTP'}</td>
+      <td>7fUvSdbIQxFaJCKinmxRS4</td>
+      <td>218103</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>https://api.spotify.com/v1/artists/4pdoRs7yHNXakMobf8M9Oz</td>
+      <td>4pdoRs7yHNXakMobf8M9Oz</td>
+      <td>SASAMI</td>
+      <td>artist</td>
+      <td>spotify:artist:4pdoRs7yHNXakMobf8M9Oz</td>
+      <td>https://open.spotify.com/artist/4pdoRs7yHNXakMobf8M9Oz</td>
+      <td>Not The Time</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4pdoRs7yHNXakMobf8M9Oz'}, 'href': 'https://api.spotify.com/v1/artists/4pdoRs7yHNXakMobf8M9Oz', 'id': '4pdoRs7yHNXakMobf8M9Oz', 'name': 'SASAMI', 'type': 'artist', 'uri': 'spotify:artist:4pdoRs7yHNXakMobf8M9Oz'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/1uXHnCnyJxEXUc8znM3gLU'}, 'href': 'https://api.spotify.com/v1/albums/1uXHnCnyJxEXUc8znM3gLU', 'id': '1uXHnCnyJxEXUc8znM3gLU', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273b00d7763984a6d0120191c5c', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02b00d7763984a6d0120191c5c', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851b00d7763984a6d0120191c5c', 'width': 64}], 'name': 'Not The Time / Callous', 'release_date': '2018-10-09', 'release_date_precision': 'day', 'total_tracks': 2, 'type': 'album', 'uri': 'spotify:album:1uXHnCnyJxEXUc8znM3gLU'}</td>
+      <td>2kz4JUPAQLcaViOVgYxzfF</td>
+      <td>170760</td>
+      <td>30</td>
+      <td>https://p.scdn.co/mp3-preview/3711bacba6211c0ae3f2f0c849ad5f2bc8d5be1a?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>https://api.spotify.com/v1/artists/1zEgVwAUxnTP5DDnmZbJnw</td>
+      <td>1zEgVwAUxnTP5DDnmZbJnw</td>
+      <td>Young Guv</td>
+      <td>artist</td>
+      <td>spotify:artist:1zEgVwAUxnTP5DDnmZbJnw</td>
+      <td>https://open.spotify.com/artist/1zEgVwAUxnTP5DDnmZbJnw</td>
+      <td>Too Far Gone</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/1zEgVwAUxnTP5DDnmZbJnw'}, 'href': 'https://api.spotify.com/v1/artists/1zEgVwAUxnTP5DDnmZbJnw', 'id': '1zEgVwAUxnTP5DDnmZbJnw', 'name': 'Young Guv', 'type': 'artist', 'uri': 'spotify:artist:1zEgVwAUxnTP5DDnmZbJnw'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/1KBLxACNExYOYbLR43eUjz'}, 'href': 'https://api.spotify.com/v1/albums/1KBLxACNExYOYbLR43eUjz', 'id': '1KBLxACNExYOYbLR43eUjz', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273f8582b3a57b8fb18c63ca8f5', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02f8582b3a57b8fb18c63ca8f5', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851f8582b3a57b8fb18c63ca8f5', 'width': 64}], 'name': 'GUV IV', 'release_date': '2022-06-24', 'release_date_precision': 'day', 'total_tracks': 12, 'type': 'album', 'uri': 'spotify:album:1KBLxACNExYOYbLR43eUjz'}</td>
+      <td>4PfM38FALYZPNlBe3SupO2</td>
+      <td>179268</td>
+      <td>15</td>
+      <td>https://p.scdn.co/mp3-preview/cb84b89c7b05e4f77be2a0d5805464a301b3b47f?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>https://api.spotify.com/v1/artists/51ymXnZGhf6Z4OcNXPviZC</td>
+      <td>51ymXnZGhf6Z4OcNXPviZC</td>
+      <td>Dummy</td>
+      <td>artist</td>
+      <td>spotify:artist:51ymXnZGhf6Z4OcNXPviZC</td>
+      <td>https://open.spotify.com/artist/51ymXnZGhf6Z4OcNXPviZC</td>
+      <td>Daffodils</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/51ymXnZGhf6Z4OcNXPviZC'}, 'href': 'https://api.spotify.com/v1/artists/51ymXnZGhf6Z4OcNXPviZC', 'id': '51ymXnZGhf6Z4OcNXPviZC', 'name': 'Dummy', 'type': 'artist', 'uri': 'spotify:artist:51ymXnZGhf6Z4OcNXPviZC'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/29qUZKyYST9LzfffZ9aUqc'}, 'href': 'https://api.spotify.com/v1/albums/29qUZKyYST9LzfffZ9aUqc', 'id': '29qUZKyYST9LzfffZ9aUqc', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2736c94d9537ba7947b483b256e', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e026c94d9537ba7947b483b256e', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048516c94d9537ba7947b483b256e', 'width': 64}], 'name': 'Mandatory Enjoyment', 'release_date': '2021-10-22', 'release_date_precision': 'day', 'total_tracks': 12, 'type': 'album', 'uri': 'spotify:album:29qUZKyYST9LzfffZ9aUqc'}</td>
+      <td>2rlBLY6Iy6dRy3X0Epkt3W</td>
+      <td>168613</td>
+      <td>32</td>
+      <td>https://p.scdn.co/mp3-preview/f508e5b088b23f6c7adec1644b3ef9251067eb07?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>https://api.spotify.com/v1/artists/2olRAVhiH5kXENIFJJWANS</td>
+      <td>2olRAVhiH5kXENIFJJWANS</td>
+      <td>Volage</td>
+      <td>artist</td>
+      <td>spotify:artist:2olRAVhiH5kXENIFJJWANS</td>
+      <td>https://open.spotify.com/artist/2olRAVhiH5kXENIFJJWANS</td>
+      <td>Horses</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/2olRAVhiH5kXENIFJJWANS'}, 'href': 'https://api.spotify.com/v1/artists/2olRAVhiH5kXENIFJJWANS', 'id': '2olRAVhiH5kXENIFJJWANS', 'name': 'Volage', 'type': 'artist', 'uri': 'spotify:artist:2olRAVhiH5kXENIFJJWANS'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/1802EbQmAYM7KVSACCxFrC'}, 'href': 'https://api.spotify.com/v1/albums/1802EbQmAYM7KVSACCxFrC', 'id': '1802EbQmAYM7KVSACCxFrC', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2737dab303c058a57a2bd895062', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e027dab303c058a57a2bd895062', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048517dab303c058a57a2bd895062', 'width': 64}], 'name': 'Strangers', 'release_date': '2020-02-28', 'release_date_precision': 'day', 'total_tracks': 5, 'type': 'album', 'uri': 'spotify:album:1802EbQmAYM7KVSACCxFrC'}</td>
+      <td>6ahbp7zeuzpGgZu1k0T6u3</td>
+      <td>259312</td>
+      <td>1</td>
+      <td>https://p.scdn.co/mp3-preview/8900c058f2d82aa9b8a680ebbb901613de6d9a4e?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>https://api.spotify.com/v1/artists/1XOKresOiQtBmduOEskf4s</td>
+      <td>1XOKresOiQtBmduOEskf4s</td>
+      <td>Aquaserge</td>
+      <td>artist</td>
+      <td>spotify:artist:1XOKresOiQtBmduOEskf4s</td>
+      <td>https://open.spotify.com/artist/1XOKresOiQtBmduOEskf4s</td>
+      <td>Virage sud</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/1XOKresOiQtBmduOEskf4s'}, 'href': 'https://api.spotify.com/v1/artists/1XOKresOiQtBmduOEskf4s', 'id': '1XOKresOiQtBmduOEskf4s', 'name': 'Aquaserge', 'type': 'artist', 'uri': 'spotify:artist:1XOKresOiQtBmduOEskf4s'}], 'available_markets': ['CA', 'US'], 'external_urls': {'spotify': 'https://open.spotify.com/album/5AoCWrOoVegMvZGBLdeRd0'}, 'href': 'https://api.spotify.com/v1/albums/5AoCWrOoVegMvZGBLdeRd0', 'id': '5AoCWrOoVegMvZGBLdeRd0', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2730d05a6cdd6d770a4db1e79c1', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e020d05a6cdd6d770a4db1e79c1', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048510d05a6cdd6d770a4db1e79c1', 'width': 64}], 'name': 'Laisse ça être', 'release_date': '2017-02-03', 'release_date_precision': 'day', 'total_tracks': 8, 'type': 'album', 'uri': 'spotify:album:5AoCWrOoVegMvZGBLdeRd0'}</td>
+      <td>2lOLjiUNQlymSYQ4o6nIVp</td>
+      <td>241981</td>
+      <td>2</td>
+      <td>https://p.scdn.co/mp3-preview/71e90687c404304bf03d137ef85bc04059ca8d97?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>https://api.spotify.com/v1/artists/6nXSnNEdLuKTzAQozRtqiI</td>
+      <td>6nXSnNEdLuKTzAQozRtqiI</td>
+      <td>M. Ward</td>
+      <td>artist</td>
+      <td>spotify:artist:6nXSnNEdLuKTzAQozRtqiI</td>
+      <td>https://open.spotify.com/artist/6nXSnNEdLuKTzAQozRtqiI</td>
+      <td>Migration of Souls</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/6nXSnNEdLuKTzAQozRtqiI'}, 'href': 'https://api.spotify.com/v1/artists/6nXSnNEdLuKTzAQozRtqiI', 'id': '6nXSnNEdLuKTzAQozRtqiI', 'name': 'M. Ward', 'type': 'artist', 'uri': 'spotify:artist:6nXSnNEdLuKTzAQozRtqiI'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/34ZwLFV1OB0IM6q96AKJPG'}, 'href': 'https://api.spotify.com/v1/albums/34ZwLFV1OB0IM6q96AKJPG', 'id': '34ZwLFV1OB0IM6q96AKJPG', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273fc603abd58f1668ea33bf42e', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02fc603abd58f1668ea33bf42e', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851fc603abd58f1668ea33bf42e', 'width': 64}], 'name': 'Migration of Souls', 'release_date': '2019-12-03', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:34ZwLFV1OB0IM6q96AKJPG'}</td>
+      <td>56VlZeAimyySP33HwTAmeI</td>
+      <td>208298</td>
+      <td>15</td>
+      <td>https://p.scdn.co/mp3-preview/24f4c9fcbb79c0050a7fd65324acd46ef72822e2?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>https://api.spotify.com/v1/artists/7hDw3suvKY0KLud00BuzHL</td>
+      <td>7hDw3suvKY0KLud00BuzHL</td>
+      <td>Shy Boys</td>
+      <td>artist</td>
+      <td>spotify:artist:7hDw3suvKY0KLud00BuzHL</td>
+      <td>https://open.spotify.com/artist/7hDw3suvKY0KLud00BuzHL</td>
+      <td>Something Sweet</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/7hDw3suvKY0KLud00BuzHL'}, 'href': 'https://api.spotify.com/v1/artists/7hDw3suvKY0KLud00BuzHL', 'id': '7hDw3suvKY0KLud00BuzHL', 'name': 'Shy Boys', 'type': 'artist', 'uri': 'spotify:artist:7hDw3suvKY0KLud00BuzHL'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/0YsnRppxJy5rigieD036tx'}, 'href': 'https://api.spotify.com/v1/albums/0YsnRppxJy5rigieD036tx', 'id': '0YsnRppxJy5rigieD036tx', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27355e1685cd90c683a4264d50a', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0255e1685cd90c683a4264d50a', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485155e1685cd90c683a4264d50a', 'width': 64}], 'name': 'Something Sweet', 'release_date': '2018-07-25', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:0YsnRppxJy5rigieD036tx'}</td>
+      <td>7iJ5IuGJ7AX97KSrFfcREa</td>
+      <td>122506</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>https://api.spotify.com/v1/artists/6FfDLM58TIa8Qn3PPQaoz4</td>
+      <td>6FfDLM58TIa8Qn3PPQaoz4</td>
+      <td>Pist Idiots</td>
+      <td>artist</td>
+      <td>spotify:artist:6FfDLM58TIa8Qn3PPQaoz4</td>
+      <td>https://open.spotify.com/artist/6FfDLM58TIa8Qn3PPQaoz4</td>
+      <td>Juliette</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/6FfDLM58TIa8Qn3PPQaoz4'}, 'href': 'https://api.spotify.com/v1/artists/6FfDLM58TIa8Qn3PPQaoz4', 'id': '6FfDLM58TIa8Qn3PPQaoz4', 'name': 'Pist Idiots', 'type': 'artist', 'uri': 'spotify:artist:6FfDLM58TIa8Qn3PPQaoz4'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/73jYCrNrhRMweXAhnhvw4w'}, 'href': 'https://api.spotify.com/v1/albums/73jYCrNrhRMweXAhnhvw4w', 'id': '73jYCrNrhRMweXAhnhvw4w', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273d994f52d522541341430d04f', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02d994f52d522541341430d04f', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851d994f52d522541341430d04f', 'width': 64}], 'name': 'Idiocracy', 'release_date': '2021-09-10', 'release_date_precision': 'day', 'total_tracks': 11, 'type': 'album', 'uri': 'spotify:album:73jYCrNrhRMweXAhnhvw4w'}</td>
+      <td>6k7BdTGoxRBvGVnw3SoqTI</td>
+      <td>154839</td>
+      <td>44</td>
+      <td>https://p.scdn.co/mp3-preview/71f4ad1194232908c39ee803bea508178093e5d1?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>https://api.spotify.com/v1/artists/7FCkbxma6Ih561lCVJIrlq</td>
+      <td>7FCkbxma6Ih561lCVJIrlq</td>
+      <td>Stephen Becker</td>
+      <td>artist</td>
+      <td>spotify:artist:7FCkbxma6Ih561lCVJIrlq</td>
+      <td>https://open.spotify.com/artist/7FCkbxma6Ih561lCVJIrlq</td>
+      <td>Unspoken</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/7FCkbxma6Ih561lCVJIrlq'}, 'href': 'https://api.spotify.com/v1/artists/7FCkbxma6Ih561lCVJIrlq', 'id': '7FCkbxma6Ih561lCVJIrlq', 'name': 'Stephen Becker', 'type': 'artist', 'uri': 'spotify:artist:7FCkbxma6Ih561lCVJIrlq'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/6pWfeRAEOI3dGfM5OcY7yY'}, 'href': 'https://api.spotify.com/v1/albums/6pWfeRAEOI3dGfM5OcY7yY', 'id': '6pWfeRAEOI3dGfM5OcY7yY', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2731cb8470273ab2d700b58ec83', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e021cb8470273ab2d700b58ec83', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048511cb8470273ab2d700b58ec83', 'width': 64}], 'name': 'Unspoken', 'release_date': '2022-08-23', 'release_date_precision': 'day', 'total_tracks': 2, 'type': 'album', 'uri': 'spotify:album:6pWfeRAEOI3dGfM5OcY7yY'}</td>
+      <td>0ogScYvpfKirFbbijwmeqJ</td>
+      <td>266738</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>https://api.spotify.com/v1/artists/7CKkZZW3XtnPmqlwaElmoV</td>
+      <td>7CKkZZW3XtnPmqlwaElmoV</td>
+      <td>Juan Wauters</td>
+      <td>artist</td>
+      <td>spotify:artist:7CKkZZW3XtnPmqlwaElmoV</td>
+      <td>https://open.spotify.com/artist/7CKkZZW3XtnPmqlwaElmoV</td>
+      <td>Letter</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/7CKkZZW3XtnPmqlwaElmoV'}, 'href': 'https://api.spotify.com/v1/artists/7CKkZZW3XtnPmqlwaElmoV', 'id': '7CKkZZW3XtnPmqlwaElmoV', 'name': 'Juan Wauters', 'type': 'artist', 'uri': 'spotify:artist:7CKkZZW3XtnPmqlwaElmoV'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/5JCvswjbPVIJBhIcIckVCR'}, 'href': 'https://api.spotify.com/v1/albums/5JCvswjbPVIJBhIcIckVCR', 'id': '5JCvswjbPVIJBhIcIckVCR', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273e7b490cd12801fc79492b84c', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02e7b490cd12801fc79492b84c', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851e7b490cd12801fc79492b84c', 'width': 64}], 'name': 'Introducing Juan Pablo', 'release_date': '2019-05-31', 'release_date_precision': 'day', 'total_tracks': 17, 'type': 'album', 'uri': 'spotify:album:5JCvswjbPVIJBhIcIckVCR'}</td>
+      <td>1MPmZOh3ErcdsC8uQEulpP</td>
+      <td>130840</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>https://api.spotify.com/v1/artists/0SNWoGaDlrCompmg9rXeNq</td>
+      <td>0SNWoGaDlrCompmg9rXeNq</td>
+      <td>Paul Kelly</td>
+      <td>artist</td>
+      <td>spotify:artist:0SNWoGaDlrCompmg9rXeNq</td>
+      <td>https://open.spotify.com/artist/0SNWoGaDlrCompmg9rXeNq</td>
+      <td>Before Too Long</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/0SNWoGaDlrCompmg9rXeNq'}, 'href': 'https://api.spotify.com/v1/artists/0SNWoGaDlrCompmg9rXeNq', 'id': '0SNWoGaDlrCompmg9rXeNq', 'name': 'Paul Kelly', 'type': 'artist', 'uri': 'spotify:artist:0SNWoGaDlrCompmg9rXeNq'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/25NgaDdi5QpPzSnULhzI44'}, 'href': 'https://api.spotify.com/v1/albums/25NgaDdi5QpPzSnULhzI44', 'id': '25NgaDdi5QpPzSnULhzI44', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273c44bd0488c94404a8cba1158', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02c44bd0488c94404a8cba1158', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851c44bd0488c94404a8cba1158', 'width': 64}], 'name': 'Songs From The South Vol. 1 &amp; 2', 'release_date': '2008-09-05', 'release_date_precision': 'day', 'total_tracks': 40, 'type': 'album', 'uri': 'spotify:album:25NgaDdi5QpPzSnULhzI44'}</td>
+      <td>5IFsC6JTR07UY2XlALLGzX</td>
+      <td>203186</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>https://api.spotify.com/v1/artists/5zLWSAer6b9f0xay70Ifg7</td>
+      <td>5zLWSAer6b9f0xay70Ifg7</td>
+      <td>Simon Doom</td>
+      <td>artist</td>
+      <td>spotify:artist:5zLWSAer6b9f0xay70Ifg7</td>
+      <td>https://open.spotify.com/artist/5zLWSAer6b9f0xay70Ifg7</td>
+      <td>You Can't Be Real</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/5zLWSAer6b9f0xay70Ifg7'}, 'href': 'https://api.spotify.com/v1/artists/5zLWSAer6b9f0xay70Ifg7', 'id': '5zLWSAer6b9f0xay70Ifg7', 'name': 'Simon Doom', 'type': 'artist', 'uri': 'spotify:artist:5zLWSAer6b9f0xay70Ifg7'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BG', 'BH', 'BI', 'BJ', 'BO', 'BR', 'BS', 'BT', 'BW', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', 'MA', 'MC', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/4nOvMzRHIBaB8X8D3eZh4G'}, 'href': 'https://api.spotify.com/v1/albums/4nOvMzRHIBaB8X8D3eZh4G', 'id': '4nOvMzRHIBaB8X8D3eZh4G', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273ef5b128c59e1f1ef9f8e00c3', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02ef5b128c59e1f1ef9f8e00c3', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851ef5b128c59e1f1ef9f8e00c3', 'width': 64}], 'name': 'Babyman', 'release_date': '2017-05-19', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:4nOvMzRHIBaB8X8D3eZh4G'}</td>
+      <td>6KAwJgC5sP1DJCKvAWboqr</td>
+      <td>142586</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>https://api.spotify.com/v1/artists/20qX3cQlCJME6SjcCOLlpI</td>
+      <td>20qX3cQlCJME6SjcCOLlpI</td>
+      <td>Cende</td>
+      <td>artist</td>
+      <td>spotify:artist:20qX3cQlCJME6SjcCOLlpI</td>
+      <td>https://open.spotify.com/artist/20qX3cQlCJME6SjcCOLlpI</td>
+      <td>Bed</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/20qX3cQlCJME6SjcCOLlpI'}, 'href': 'https://api.spotify.com/v1/artists/20qX3cQlCJME6SjcCOLlpI', 'id': '20qX3cQlCJME6SjcCOLlpI', 'name': 'Cende', 'type': 'artist', 'uri': 'spotify:artist:20qX3cQlCJME6SjcCOLlpI'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/63HiYMlXyA6nIrxNio3hT0'}, 'href': 'https://api.spotify.com/v1/albums/63HiYMlXyA6nIrxNio3hT0', 'id': '63HiYMlXyA6nIrxNio3hT0', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273901efdc86334080dc74ac040', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02901efdc86334080dc74ac040', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851901efdc86334080dc74ac040', 'width': 64}], 'name': 'Bed', 'release_date': '2017-03-31', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:63HiYMlXyA6nIrxNio3hT0'}</td>
+      <td>6rsjrIwt1u2K9Lg2LEaIzs</td>
+      <td>170585</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>https://api.spotify.com/v1/artists/5MXsi1oKkm8LuStuKkMdzu</td>
+      <td>5MXsi1oKkm8LuStuKkMdzu</td>
+      <td>Sam Evian</td>
+      <td>artist</td>
+      <td>spotify:artist:5MXsi1oKkm8LuStuKkMdzu</td>
+      <td>https://open.spotify.com/artist/5MXsi1oKkm8LuStuKkMdzu</td>
+      <td>Need You</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/5MXsi1oKkm8LuStuKkMdzu'}, 'href': 'https://api.spotify.com/v1/artists/5MXsi1oKkm8LuStuKkMdzu', 'id': '5MXsi1oKkm8LuStuKkMdzu', 'name': 'Sam Evian', 'type': 'artist', 'uri': 'spotify:artist:5MXsi1oKkm8LuStuKkMdzu'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/6GrQ6T1foLIGgFhJjD91cX'}, 'href': 'https://api.spotify.com/v1/albums/6GrQ6T1foLIGgFhJjD91cX', 'id': '6GrQ6T1foLIGgFhJjD91cX', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273c837a93e42c2e921f0956f09', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02c837a93e42c2e921f0956f09', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851c837a93e42c2e921f0956f09', 'width': 64}], 'name': 'Need You', 'release_date': '2017-10-05', 'release_date_precision': 'day', 'total_tracks': 2, 'type': 'album', 'uri': 'spotify:album:6GrQ6T1foLIGgFhJjD91cX'}</td>
+      <td>7sGUG5AxdNzfiEQbStKIfS</td>
+      <td>230606</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>https://api.spotify.com/v1/artists/7qdekJWCmCXEWRssKhaOt9</td>
+      <td>7qdekJWCmCXEWRssKhaOt9</td>
+      <td>James Swanberg</td>
+      <td>artist</td>
+      <td>spotify:artist:7qdekJWCmCXEWRssKhaOt9</td>
+      <td>https://open.spotify.com/artist/7qdekJWCmCXEWRssKhaOt9</td>
+      <td>It's No Wonder</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/7qdekJWCmCXEWRssKhaOt9'}, 'href': 'https://api.spotify.com/v1/artists/7qdekJWCmCXEWRssKhaOt9', 'id': '7qdekJWCmCXEWRssKhaOt9', 'name': 'James Swanberg', 'type': 'artist', 'uri': 'spotify:artist:7qdekJWCmCXEWRssKhaOt9'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BZ', 'CA', 'CG', 'CH', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'MA', 'MC', 'MD', 'ME', 'MG', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/01pDNyc1veAaH72lFjgwY0'}, 'href': 'https://api.spotify.com/v1/albums/01pDNyc1veAaH72lFjgwY0', 'id': '01pDNyc1veAaH72lFjgwY0', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273d5d6a95f231a4ccb2ae25c11', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02d5d6a95f231a4ccb2ae25c11', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851d5d6a95f231a4ccb2ae25c11', 'width': 64}], 'name': 'It's No Wonder', 'release_date': '2019-05-10', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:01pDNyc1veAaH72lFjgwY0'}</td>
+      <td>49hrmZYP4z7r0L1gbunvIr</td>
+      <td>238317</td>
+      <td>19</td>
+      <td>https://p.scdn.co/mp3-preview/6581d66fb826cbc8b789d80155ff38d84215d891?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>https://api.spotify.com/v1/artists/5fN7QZumpTbySswZyiWKXn</td>
+      <td>5fN7QZumpTbySswZyiWKXn</td>
+      <td>Papercuts</td>
+      <td>artist</td>
+      <td>spotify:artist:5fN7QZumpTbySswZyiWKXn</td>
+      <td>https://open.spotify.com/artist/5fN7QZumpTbySswZyiWKXn</td>
+      <td>I Want My Jacket Back</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/5fN7QZumpTbySswZyiWKXn'}, 'href': 'https://api.spotify.com/v1/artists/5fN7QZumpTbySswZyiWKXn', 'id': '5fN7QZumpTbySswZyiWKXn', 'name': 'Papercuts', 'type': 'artist', 'uri': 'spotify:artist:5fN7QZumpTbySswZyiWKXn'}], 'available_markets': ['AE', 'AG', 'AO', 'AR', 'AU', 'BB', 'BD', 'BF', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BZ', 'CA', 'CD', 'CG', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'DJ', 'DM', 'DO', 'DZ', 'EC', 'EG', 'FJ', 'FM', 'GA', 'GD', 'GH', 'GM', 'GN', 'GQ', 'GT', 'GW', 'GY', 'HK', 'HN', 'HT', 'ID', 'IL', 'IN', 'IQ', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'LA', 'LB', 'LC', 'LK', 'LR', 'LS', 'LY', 'MA', 'MG', 'MH', 'ML', 'MN', 'MO', 'MR', 'MU', 'MV', 'MW', 'MX', 'MY', 'MZ', 'NA', 'NE', 'NG', 'NI', 'NP', 'NR', 'NZ', 'OM', 'PA', 'PE', 'PG', 'PH', 'PK', 'PS', 'PW', 'PY', 'QA', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/46haRq08MM0GIXj1r7WHWw'}, 'href': 'https://api.spotify.com/v1/albums/46haRq08MM0GIXj1r7WHWw', 'id': '46haRq08MM0GIXj1r7WHWw', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2730411330915f5e3345b083ac0', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e020411330915f5e3345b083ac0', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048510411330915f5e3345b083ac0', 'width': 64}], 'name': 'Past Life Regression', 'release_date': '2022-04-01', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:46haRq08MM0GIXj1r7WHWw'}</td>
+      <td>2vcdNRRr9S9ezxqKQuauTq</td>
+      <td>268093</td>
+      <td>9</td>
+      <td>https://p.scdn.co/mp3-preview/9a651dab34a0440818f2c97e2af0c4fe5f4c14f4?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>https://api.spotify.com/v1/artists/1xD85sp0kecIVuMwUHShxs</td>
+      <td>1xD85sp0kecIVuMwUHShxs</td>
+      <td>Twin Peaks</td>
+      <td>artist</td>
+      <td>spotify:artist:1xD85sp0kecIVuMwUHShxs</td>
+      <td>https://open.spotify.com/artist/1xD85sp0kecIVuMwUHShxs</td>
+      <td>Walk to the One You Love</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/1xD85sp0kecIVuMwUHShxs'}, 'href': 'https://api.spotify.com/v1/artists/1xD85sp0kecIVuMwUHShxs', 'id': '1xD85sp0kecIVuMwUHShxs', 'name': 'Twin Peaks', 'type': 'artist', 'uri': 'spotify:artist:1xD85sp0kecIVuMwUHShxs'}], 'available_markets': ['CA', 'US'], 'external_urls': {'spotify': 'https://open.spotify.com/album/5JOX6fby2BSfJl6nZqU9e0'}, 'href': 'https://api.spotify.com/v1/albums/5JOX6fby2BSfJl6nZqU9e0', 'id': '5JOX6fby2BSfJl6nZqU9e0', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273fc6689d6e5d7b203b5a382e7', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02fc6689d6e5d7b203b5a382e7', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851fc6689d6e5d7b203b5a382e7', 'width': 64}], 'name': 'Walk to the One You Love', 'release_date': '2016-02-01', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:5JOX6fby2BSfJl6nZqU9e0'}</td>
+      <td>7yiQa33gU71VQezpO1xO3d</td>
+      <td>213426</td>
+      <td>7</td>
+      <td>https://p.scdn.co/mp3-preview/4c71afabf33e116dcf6ccdeda9f69d369939f4d1?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>https://api.spotify.com/v1/artists/49q3PS0SzgbyvWDwZj7qg5</td>
+      <td>49q3PS0SzgbyvWDwZj7qg5</td>
+      <td>Lewsberg</td>
+      <td>artist</td>
+      <td>spotify:artist:49q3PS0SzgbyvWDwZj7qg5</td>
+      <td>https://open.spotify.com/artist/49q3PS0SzgbyvWDwZj7qg5</td>
+      <td>Cold Light of Day</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/49q3PS0SzgbyvWDwZj7qg5'}, 'href': 'https://api.spotify.com/v1/artists/49q3PS0SzgbyvWDwZj7qg5', 'id': '49q3PS0SzgbyvWDwZj7qg5', 'name': 'Lewsberg', 'type': 'artist', 'uri': 'spotify:artist:49q3PS0SzgbyvWDwZj7qg5'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/66ok1TyI3xJpLsh83bEbAm'}, 'href': 'https://api.spotify.com/v1/albums/66ok1TyI3xJpLsh83bEbAm', 'id': '66ok1TyI3xJpLsh83bEbAm', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27357375636899abff0771fa2b6', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0257375636899abff0771fa2b6', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485157375636899abff0771fa2b6', 'width': 64}], 'name': 'In This House', 'release_date': '2020-03-27', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:66ok1TyI3xJpLsh83bEbAm'}</td>
+      <td>7Bs7h7uncIsLkbHjOSKJy8</td>
+      <td>278091</td>
+      <td>33</td>
+      <td>https://p.scdn.co/mp3-preview/a0c17e25ea45d9c7555a934e8da9a671e5432021?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>https://api.spotify.com/v1/artists/1ysOXSDpupZ5RBQ9PNFZU7</td>
+      <td>1ysOXSDpupZ5RBQ9PNFZU7</td>
+      <td>Nap Eyes</td>
+      <td>artist</td>
+      <td>spotify:artist:1ysOXSDpupZ5RBQ9PNFZU7</td>
+      <td>https://open.spotify.com/artist/1ysOXSDpupZ5RBQ9PNFZU7</td>
+      <td>Every Time the Feeling</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/1ysOXSDpupZ5RBQ9PNFZU7'}, 'href': 'https://api.spotify.com/v1/artists/1ysOXSDpupZ5RBQ9PNFZU7', 'id': '1ysOXSDpupZ5RBQ9PNFZU7', 'name': 'Nap Eyes', 'type': 'artist', 'uri': 'spotify:artist:1ysOXSDpupZ5RBQ9PNFZU7'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/6d6UV2HpQRMdfB4VaBtcHc'}, 'href': 'https://api.spotify.com/v1/albums/6d6UV2HpQRMdfB4VaBtcHc', 'id': '6d6UV2HpQRMdfB4VaBtcHc', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2733771cfb3445c872ca871c6bb', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e023771cfb3445c872ca871c6bb', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048513771cfb3445c872ca871c6bb', 'width': 64}], 'name': 'Every Time the Feeling', 'release_date': '2018-01-11', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:6d6UV2HpQRMdfB4VaBtcHc'}</td>
+      <td>7I74Omo04T7u2kwSkjjfQp</td>
+      <td>191595</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>https://api.spotify.com/v1/artists/7d3F2vuzZfe5R0Pltt0poO</td>
+      <td>7d3F2vuzZfe5R0Pltt0poO</td>
+      <td>Scott &amp; Charlene's Wedding</td>
+      <td>artist</td>
+      <td>spotify:artist:7d3F2vuzZfe5R0Pltt0poO</td>
+      <td>https://open.spotify.com/artist/7d3F2vuzZfe5R0Pltt0poO</td>
+      <td>Outside World</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/7d3F2vuzZfe5R0Pltt0poO'}, 'href': 'https://api.spotify.com/v1/artists/7d3F2vuzZfe5R0Pltt0poO', 'id': '7d3F2vuzZfe5R0Pltt0poO', 'name': 'Scott &amp; Charlene's Wedding', 'type': 'artist', 'uri': 'spotify:artist:7d3F2vuzZfe5R0Pltt0poO'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/6e3DYO0nQzgaJDVsfGYd5S'}, 'href': 'https://api.spotify.com/v1/albums/6e3DYO0nQzgaJDVsfGYd5S', 'id': '6e3DYO0nQzgaJDVsfGYd5S', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2736b00ad9801267101f36d633a', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e026b00ad9801267101f36d633a', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048516b00ad9801267101f36d633a', 'width': 64}], 'name': 'When in Rome, Carpe Diem', 'release_date': '2019-11-29', 'release_date_precision': 'day', 'total_tracks': 6, 'type': 'album', 'uri': 'spotify:album:6e3DYO0nQzgaJDVsfGYd5S'}</td>
+      <td>5IEIT0KQdmHYqrAwepczh1</td>
+      <td>271989</td>
+      <td>7</td>
+      <td>https://p.scdn.co/mp3-preview/c66564b64d9fb6be43ee9761f006eeddf8a9ac1e?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>https://api.spotify.com/v1/artists/2mX1Ehjr3tpLsuo7rjJuyf</td>
+      <td>2mX1Ehjr3tpLsuo7rjJuyf</td>
+      <td>PAINT</td>
+      <td>artist</td>
+      <td>spotify:artist:2mX1Ehjr3tpLsuo7rjJuyf</td>
+      <td>https://open.spotify.com/artist/2mX1Ehjr3tpLsuo7rjJuyf</td>
+      <td>Splattered</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/2mX1Ehjr3tpLsuo7rjJuyf'}, 'href': 'https://api.spotify.com/v1/artists/2mX1Ehjr3tpLsuo7rjJuyf', 'id': '2mX1Ehjr3tpLsuo7rjJuyf', 'name': 'PAINT', 'type': 'artist', 'uri': 'spotify:artist:2mX1Ehjr3tpLsuo7rjJuyf'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/0WqibCA2N3Ixzn2G0YuRGD'}, 'href': 'https://api.spotify.com/v1/albums/0WqibCA2N3Ixzn2G0YuRGD', 'id': '0WqibCA2N3Ixzn2G0YuRGD', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273476095d1e6bcc3d4dfdb04ff', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02476095d1e6bcc3d4dfdb04ff', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851476095d1e6bcc3d4dfdb04ff', 'width': 64}], 'name': 'PAINT', 'release_date': '2018-11-02', 'release_date_precision': 'day', 'total_tracks': 12, 'type': 'album', 'uri': 'spotify:album:0WqibCA2N3Ixzn2G0YuRGD'}</td>
+      <td>1Krq3yW6DexNhByslno7G0</td>
+      <td>172112</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>https://api.spotify.com/v1/artists/4idG41ELGGRKuiHLc3VLc5</td>
+      <td>4idG41ELGGRKuiHLc3VLc5</td>
+      <td>Vanishing Twin</td>
+      <td>artist</td>
+      <td>spotify:artist:4idG41ELGGRKuiHLc3VLc5</td>
+      <td>https://open.spotify.com/artist/4idG41ELGGRKuiHLc3VLc5</td>
+      <td>Telescope</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4idG41ELGGRKuiHLc3VLc5'}, 'href': 'https://api.spotify.com/v1/artists/4idG41ELGGRKuiHLc3VLc5', 'id': '4idG41ELGGRKuiHLc3VLc5', 'name': 'Vanishing Twin', 'type': 'artist', 'uri': 'spotify:artist:4idG41ELGGRKuiHLc3VLc5'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/4Nn2oPaVW8nSDDJ6yi7Fr3'}, 'href': 'https://api.spotify.com/v1/albums/4Nn2oPaVW8nSDDJ6yi7Fr3', 'id': '4Nn2oPaVW8nSDDJ6yi7Fr3', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2732085552421608955e52c97b8', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e022085552421608955e52c97b8', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048512085552421608955e52c97b8', 'width': 64}], 'name': 'Choose Your Own Adventure', 'release_date': '2016-09-30', 'release_date_precision': 'day', 'total_tracks': 9, 'type': 'album', 'uri': 'spotify:album:4Nn2oPaVW8nSDDJ6yi7Fr3'}</td>
+      <td>7a7UJGEBk5sG4JdEDRrW32</td>
+      <td>259120</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>https://api.spotify.com/v1/artists/4NE1CVLnv7AmiqvU4w1kUQ</td>
+      <td>4NE1CVLnv7AmiqvU4w1kUQ</td>
+      <td>Exploded View</td>
+      <td>artist</td>
+      <td>spotify:artist:4NE1CVLnv7AmiqvU4w1kUQ</td>
+      <td>https://open.spotify.com/artist/4NE1CVLnv7AmiqvU4w1kUQ</td>
+      <td>Summer Came Early</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4NE1CVLnv7AmiqvU4w1kUQ'}, 'href': 'https://api.spotify.com/v1/artists/4NE1CVLnv7AmiqvU4w1kUQ', 'id': '4NE1CVLnv7AmiqvU4w1kUQ', 'name': 'Exploded View', 'type': 'artist', 'uri': 'spotify:artist:4NE1CVLnv7AmiqvU4w1kUQ'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/0IIucEid3nQeDYjIpT51MA'}, 'href': 'https://api.spotify.com/v1/albums/0IIucEid3nQeDYjIpT51MA', 'id': '0IIucEid3nQeDYjIpT51MA', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2732f8a83a753b1ae70c5a63672', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e022f8a83a753b1ae70c5a63672', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048512f8a83a753b1ae70c5a63672', 'width': 64}], 'name': 'Summer Came Early', 'release_date': '2017-10-11', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:0IIucEid3nQeDYjIpT51MA'}</td>
+      <td>0cO57YmyUZpkSainlOWYnq</td>
+      <td>206073</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>https://api.spotify.com/v1/artists/67tGvTTG36JaxuJ0UBkMzu</td>
+      <td>67tGvTTG36JaxuJ0UBkMzu</td>
+      <td>Whyte Horses</td>
+      <td>artist</td>
+      <td>spotify:artist:67tGvTTG36JaxuJ0UBkMzu</td>
+      <td>https://open.spotify.com/artist/67tGvTTG36JaxuJ0UBkMzu</td>
+      <td>Empty Words</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/67tGvTTG36JaxuJ0UBkMzu'}, 'href': 'https://api.spotify.com/v1/artists/67tGvTTG36JaxuJ0UBkMzu', 'id': '67tGvTTG36JaxuJ0UBkMzu', 'name': 'Whyte Horses', 'type': 'artist', 'uri': 'spotify:artist:67tGvTTG36JaxuJ0UBkMzu'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/6IdGCkDHRBGWRSAZqd1mHR'}, 'href': 'https://api.spotify.com/v1/albums/6IdGCkDHRBGWRSAZqd1mHR', 'id': '6IdGCkDHRBGWRSAZqd1mHR', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27398367247adfb66e47b63b5d3', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0298367247adfb66e47b63b5d3', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485198367247adfb66e47b63b5d3', 'width': 64}], 'name': 'Empty Words', 'release_date': '2018-03-09', 'release_date_precision': 'day', 'total_tracks': 16, 'type': 'album', 'uri': 'spotify:album:6IdGCkDHRBGWRSAZqd1mHR'}</td>
+      <td>1LvNPiawDyvjoevNkz6qSN</td>
+      <td>152360</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>https://api.spotify.com/v1/artists/6U05T6mkHLUdhGxR9rqTi4</td>
+      <td>6U05T6mkHLUdhGxR9rqTi4</td>
+      <td>Elle Músa</td>
+      <td>artist</td>
+      <td>spotify:artist:6U05T6mkHLUdhGxR9rqTi4</td>
+      <td>https://open.spotify.com/artist/6U05T6mkHLUdhGxR9rqTi4</td>
+      <td>Mango Pops</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/6U05T6mkHLUdhGxR9rqTi4'}, 'href': 'https://api.spotify.com/v1/artists/6U05T6mkHLUdhGxR9rqTi4', 'id': '6U05T6mkHLUdhGxR9rqTi4', 'name': 'Elle Músa', 'type': 'artist', 'uri': 'spotify:artist:6U05T6mkHLUdhGxR9rqTi4'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/5MNw277O7yhISOAQ8CQe74'}, 'href': 'https://api.spotify.com/v1/albums/5MNw277O7yhISOAQ8CQe74', 'id': '5MNw277O7yhISOAQ8CQe74', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27359d3cf2c477866a6867d122a', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0259d3cf2c477866a6867d122a', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485159d3cf2c477866a6867d122a', 'width': 64}], 'name': 'Mango Pops', 'release_date': '2020-06-24', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:5MNw277O7yhISOAQ8CQe74'}</td>
+      <td>6eM1YXS4hbAdb5b75PKjnM</td>
+      <td>204466</td>
+      <td>44</td>
+      <td>https://p.scdn.co/mp3-preview/4f23fa179a77d2360e33de7ef278721a4710c3d9?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>https://api.spotify.com/v1/artists/2oVrruuEI0Dr2I4NvLtQS0</td>
+      <td>2oVrruuEI0Dr2I4NvLtQS0</td>
+      <td>Clara Luciani</td>
+      <td>artist</td>
+      <td>spotify:artist:2oVrruuEI0Dr2I4NvLtQS0</td>
+      <td>https://open.spotify.com/artist/2oVrruuEI0Dr2I4NvLtQS0</td>
+      <td>On ne meurt pas d'amour</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/2oVrruuEI0Dr2I4NvLtQS0'}, 'href': 'https://api.spotify.com/v1/artists/2oVrruuEI0Dr2I4NvLtQS0', 'id': '2oVrruuEI0Dr2I4NvLtQS0', 'name': 'Clara Luciani', 'type': 'artist', 'uri': 'spotify:artist:2oVrruuEI0Dr2I4NvLtQS0'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/4oOotUMoznVTdGWzdUoEuy'}, 'href': 'https://api.spotify.com/v1/albums/4oOotUMoznVTdGWzdUoEuy', 'id': '4oOotUMoznVTdGWzdUoEuy', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2736de908475396d444b724165b', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e026de908475396d444b724165b', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048516de908475396d444b724165b', 'width': 64}], 'name': 'Sainte-Victoire', 'release_date': '2018-04-06', 'release_date_precision': 'day', 'total_tracks': 11, 'type': 'album', 'uri': 'spotify:album:4oOotUMoznVTdGWzdUoEuy'}</td>
+      <td>4ovQY3yLU58scPdkK0IbkU</td>
+      <td>211853</td>
+      <td>38</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>https://api.spotify.com/v1/artists/44mRrrRjaV8iu1VLIKuwty</td>
+      <td>44mRrrRjaV8iu1VLIKuwty</td>
+      <td>Gwenno</td>
+      <td>artist</td>
+      <td>spotify:artist:44mRrrRjaV8iu1VLIKuwty</td>
+      <td>https://open.spotify.com/artist/44mRrrRjaV8iu1VLIKuwty</td>
+      <td>Tir Ha mor</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/44mRrrRjaV8iu1VLIKuwty'}, 'href': 'https://api.spotify.com/v1/artists/44mRrrRjaV8iu1VLIKuwty', 'id': '44mRrrRjaV8iu1VLIKuwty', 'name': 'Gwenno', 'type': 'artist', 'uri': 'spotify:artist:44mRrrRjaV8iu1VLIKuwty'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/3iVFjOB6CU7WBxMssF5RlN'}, 'href': 'https://api.spotify.com/v1/albums/3iVFjOB6CU7WBxMssF5RlN', 'id': '3iVFjOB6CU7WBxMssF5RlN', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273ff0b5e6887c245681b05e696', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02ff0b5e6887c245681b05e696', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851ff0b5e6887c245681b05e696', 'width': 64}], 'name': 'Le Kov', 'release_date': '2018-03-02', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:3iVFjOB6CU7WBxMssF5RlN'}</td>
+      <td>2xDphPzzpFFW9p3quZGb5R</td>
+      <td>250380</td>
+      <td>32</td>
+      <td>https://p.scdn.co/mp3-preview/f5056f8674fdb90685ab7be75afdacb53deab9fc?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>https://api.spotify.com/v1/artists/0Kpf7PvEotzvndPhYwwZzb</td>
+      <td>0Kpf7PvEotzvndPhYwwZzb</td>
+      <td>The Ophelias</td>
+      <td>artist</td>
+      <td>spotify:artist:0Kpf7PvEotzvndPhYwwZzb</td>
+      <td>https://open.spotify.com/artist/0Kpf7PvEotzvndPhYwwZzb</td>
+      <td>Fog</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/0Kpf7PvEotzvndPhYwwZzb'}, 'href': 'https://api.spotify.com/v1/artists/0Kpf7PvEotzvndPhYwwZzb', 'id': '0Kpf7PvEotzvndPhYwwZzb', 'name': 'The Ophelias', 'type': 'artist', 'uri': 'spotify:artist:0Kpf7PvEotzvndPhYwwZzb'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/4H0S3BMWhtwjd5besGIBqN'}, 'href': 'https://api.spotify.com/v1/albums/4H0S3BMWhtwjd5besGIBqN', 'id': '4H0S3BMWhtwjd5besGIBqN', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2731980bedb2926979d8e690303', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e021980bedb2926979d8e690303', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048511980bedb2926979d8e690303', 'width': 64}], 'name': 'Almost', 'release_date': '2018-07-13', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:4H0S3BMWhtwjd5besGIBqN'}</td>
+      <td>27YHRywPPDxwJntJbYN2Pc</td>
+      <td>103826</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>https://api.spotify.com/v1/artists/4NxTtZTeJqQ1n27i2qnPCe</td>
+      <td>4NxTtZTeJqQ1n27i2qnPCe</td>
+      <td>Coco</td>
+      <td>artist</td>
+      <td>spotify:artist:4NxTtZTeJqQ1n27i2qnPCe</td>
+      <td>https://open.spotify.com/artist/4NxTtZTeJqQ1n27i2qnPCe</td>
+      <td>Last of the Loving</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4NxTtZTeJqQ1n27i2qnPCe'}, 'href': 'https://api.spotify.com/v1/artists/4NxTtZTeJqQ1n27i2qnPCe', 'id': '4NxTtZTeJqQ1n27i2qnPCe', 'name': 'Coco', 'type': 'artist', 'uri': 'spotify:artist:4NxTtZTeJqQ1n27i2qnPCe'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/5r9YoZIKRt8YRDLNC03ZuZ'}, 'href': 'https://api.spotify.com/v1/albums/5r9YoZIKRt8YRDLNC03ZuZ', 'id': '5r9YoZIKRt8YRDLNC03ZuZ', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2737ef4d77e3ff43bd72639fcbb', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e027ef4d77e3ff43bd72639fcbb', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048517ef4d77e3ff43bd72639fcbb', 'width': 64}], 'name': 'Coco', 'release_date': '2021-10-29', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:5r9YoZIKRt8YRDLNC03ZuZ'}</td>
+      <td>0y6rO1JGW02H30j8trmhSP</td>
+      <td>172163</td>
+      <td>43</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>https://api.spotify.com/v1/artists/05mrgAc22h2bmtSDi3kVwy</td>
+      <td>05mrgAc22h2bmtSDi3kVwy</td>
+      <td>Half Stack</td>
+      <td>artist</td>
+      <td>spotify:artist:05mrgAc22h2bmtSDi3kVwy</td>
+      <td>https://open.spotify.com/artist/05mrgAc22h2bmtSDi3kVwy</td>
+      <td>Know You Well</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/05mrgAc22h2bmtSDi3kVwy'}, 'href': 'https://api.spotify.com/v1/artists/05mrgAc22h2bmtSDi3kVwy', 'id': '05mrgAc22h2bmtSDi3kVwy', 'name': 'Half Stack', 'type': 'artist', 'uri': 'spotify:artist:05mrgAc22h2bmtSDi3kVwy'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/6xswHJI6TokY4TrbeaRJI5'}, 'href': 'https://api.spotify.com/v1/albums/6xswHJI6TokY4TrbeaRJI5', 'id': '6xswHJI6TokY4TrbeaRJI5', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2739a2dce3969044cf941028799', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e029a2dce3969044cf941028799', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048519a2dce3969044cf941028799', 'width': 64}], 'name': 'Aw Hell', 'release_date': '2019-10-07', 'release_date_precision': 'day', 'total_tracks': 4, 'type': 'album', 'uri': 'spotify:album:6xswHJI6TokY4TrbeaRJI5'}</td>
+      <td>0k6tz20eWKukq6M4hH97E4</td>
+      <td>208608</td>
+      <td>0</td>
+      <td>https://p.scdn.co/mp3-preview/47b4be2525a482d35e69b6728aedf811ad613114?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>https://api.spotify.com/v1/artists/1HHyE1TCzui5Lay0gwS6bR</td>
+      <td>1HHyE1TCzui5Lay0gwS6bR</td>
+      <td>Drahla</td>
+      <td>artist</td>
+      <td>spotify:artist:1HHyE1TCzui5Lay0gwS6bR</td>
+      <td>https://open.spotify.com/artist/1HHyE1TCzui5Lay0gwS6bR</td>
+      <td>Silk Spirit</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/1HHyE1TCzui5Lay0gwS6bR'}, 'href': 'https://api.spotify.com/v1/artists/1HHyE1TCzui5Lay0gwS6bR', 'id': '1HHyE1TCzui5Lay0gwS6bR', 'name': 'Drahla', 'type': 'artist', 'uri': 'spotify:artist:1HHyE1TCzui5Lay0gwS6bR'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/2GIZiZ66gXgvvr1fji5Xrk'}, 'href': 'https://api.spotify.com/v1/albums/2GIZiZ66gXgvvr1fji5Xrk', 'id': '2GIZiZ66gXgvvr1fji5Xrk', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273351b0a5b17adc3bc3d1b567c', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02351b0a5b17adc3bc3d1b567c', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851351b0a5b17adc3bc3d1b567c', 'width': 64}], 'name': 'Third Article', 'release_date': '2017-11-24', 'release_date_precision': 'day', 'total_tracks': 4, 'type': 'album', 'uri': 'spotify:album:2GIZiZ66gXgvvr1fji5Xrk'}</td>
+      <td>1DsLQ8DWR0yr4bjpylQ10H</td>
+      <td>198773</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>https://api.spotify.com/v1/artists/0Odl3aF4VeFp5vsrCC7dQq</td>
+      <td>0Odl3aF4VeFp5vsrCC7dQq</td>
+      <td>Dumb</td>
+      <td>artist</td>
+      <td>spotify:artist:0Odl3aF4VeFp5vsrCC7dQq</td>
+      <td>https://open.spotify.com/artist/0Odl3aF4VeFp5vsrCC7dQq</td>
+      <td>Pull Me Up</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/0Odl3aF4VeFp5vsrCC7dQq'}, 'href': 'https://api.spotify.com/v1/artists/0Odl3aF4VeFp5vsrCC7dQq', 'id': '0Odl3aF4VeFp5vsrCC7dQq', 'name': 'Dumb', 'type': 'artist', 'uri': 'spotify:artist:0Odl3aF4VeFp5vsrCC7dQq'}], 'available_markets': ['US'], 'external_urls': {'spotify': 'https://open.spotify.com/album/3gFmmHP0uKr4ZG1RrSaw1s'}, 'href': 'https://api.spotify.com/v1/albums/3gFmmHP0uKr4ZG1RrSaw1s', 'id': '3gFmmHP0uKr4ZG1RrSaw1s', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2733a4dc13863121f1a7c632d72', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e023a4dc13863121f1a7c632d72', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048513a4dc13863121f1a7c632d72', 'width': 64}], 'name': 'Pull Me Up', 'release_date': '2022-08-23', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:3gFmmHP0uKr4ZG1RrSaw1s'}</td>
+      <td>7wQ2qMzpOPULgcPjS2w8VF</td>
+      <td>176347</td>
+      <td>10</td>
+      <td>https://p.scdn.co/mp3-preview/f736f2f5dedc23903bb86cc2ca91ee77dfe6b91a?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>https://api.spotify.com/v1/artists/7rVi5rhJnyxph7p39eKjJE</td>
+      <td>7rVi5rhJnyxph7p39eKjJE</td>
+      <td>Terry</td>
+      <td>artist</td>
+      <td>spotify:artist:7rVi5rhJnyxph7p39eKjJE</td>
+      <td>https://open.spotify.com/artist/7rVi5rhJnyxph7p39eKjJE</td>
+      <td>Rio</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/7rVi5rhJnyxph7p39eKjJE'}, 'href': 'https://api.spotify.com/v1/artists/7rVi5rhJnyxph7p39eKjJE', 'id': '7rVi5rhJnyxph7p39eKjJE', 'name': 'Terry', 'type': 'artist', 'uri': 'spotify:artist:7rVi5rhJnyxph7p39eKjJE'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/1UwNkSvpTqtjf2r8cvA1sB'}, 'href': 'https://api.spotify.com/v1/albums/1UwNkSvpTqtjf2r8cvA1sB', 'id': '1UwNkSvpTqtjf2r8cvA1sB', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273ea6b682484af27f6cac4c97e', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02ea6b682484af27f6cac4c97e', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851ea6b682484af27f6cac4c97e', 'width': 64}], 'name': 'Remember Terry', 'release_date': '2017-06-30', 'release_date_precision': 'day', 'total_tracks': 10, 'type': 'album', 'uri': 'spotify:album:1UwNkSvpTqtjf2r8cvA1sB'}</td>
+      <td>5NVtgR1l5UEZmBtSVzgcZx</td>
+      <td>111829</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>https://api.spotify.com/v1/artists/4wBhllC5Nto10UefzXVMt9</td>
+      <td>4wBhllC5Nto10UefzXVMt9</td>
+      <td>Omni</td>
+      <td>artist</td>
+      <td>spotify:artist:4wBhllC5Nto10UefzXVMt9</td>
+      <td>https://open.spotify.com/artist/4wBhllC5Nto10UefzXVMt9</td>
+      <td>Equestrian</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/4wBhllC5Nto10UefzXVMt9'}, 'href': 'https://api.spotify.com/v1/artists/4wBhllC5Nto10UefzXVMt9', 'id': '4wBhllC5Nto10UefzXVMt9', 'name': 'Omni', 'type': 'artist', 'uri': 'spotify:artist:4wBhllC5Nto10UefzXVMt9'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/73yVKfQmr79pVhSpiqjXOm'}, 'href': 'https://api.spotify.com/v1/albums/73yVKfQmr79pVhSpiqjXOm', 'id': '73yVKfQmr79pVhSpiqjXOm', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273bca1d229c2d81e3a56ffaa35', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02bca1d229c2d81e3a56ffaa35', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851bca1d229c2d81e3a56ffaa35', 'width': 64}], 'name': 'Equestrian', 'release_date': '2017-07-06', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:73yVKfQmr79pVhSpiqjXOm'}</td>
+      <td>1H12abCXoMnn6gF33F3pMh</td>
+      <td>160468</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>https://api.spotify.com/v1/artists/3aVwqkJqkpiRLbM0dVqOz6</td>
+      <td>3aVwqkJqkpiRLbM0dVqOz6</td>
+      <td>Blumentopf</td>
+      <td>artist</td>
+      <td>spotify:artist:3aVwqkJqkpiRLbM0dVqOz6</td>
+      <td>https://open.spotify.com/artist/3aVwqkJqkpiRLbM0dVqOz6</td>
+      <td>Safari</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/3aVwqkJqkpiRLbM0dVqOz6'}, 'href': 'https://api.spotify.com/v1/artists/3aVwqkJqkpiRLbM0dVqOz6', 'id': '3aVwqkJqkpiRLbM0dVqOz6', 'name': 'Blumentopf', 'type': 'artist', 'uri': 'spotify:artist:3aVwqkJqkpiRLbM0dVqOz6'}], 'available_markets': ['AD', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BI', 'BJ', 'BO', 'BR', 'BS', 'BT', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'ES', 'FI', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HN', 'HR', 'HT', 'HU', 'IE', 'IL', 'IN', 'IS', 'IT', 'JM', 'JP', 'KE', 'KG', 'KM', 'KN', 'KZ', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'MA', 'MC', 'MD', 'ME', 'MG', 'MK', 'ML', 'MN', 'MR', 'MT', 'MU', 'MV', 'MW', 'MX', 'MZ', 'NA', 'NE', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/3DGtfZr0LuTO6zDMyCUscU'}, 'href': 'https://api.spotify.com/v1/albums/3DGtfZr0LuTO6zDMyCUscU', 'id': '3DGtfZr0LuTO6zDMyCUscU', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273ece6e24016899d305cc90939', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02ece6e24016899d305cc90939', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851ece6e24016899d305cc90939', 'width': 64}], 'name': 'Großes Kino', 'release_date': '1999-08-02', 'release_date_precision': 'day', 'total_tracks': 24, 'type': 'album', 'uri': 'spotify:album:3DGtfZr0LuTO6zDMyCUscU'}</td>
+      <td>5IdPCWPtBLLC6cSxP4BZGm</td>
+      <td>248666</td>
+      <td>38</td>
+      <td>https://p.scdn.co/mp3-preview/0872d1317ef005a940c0e550aa297ee3dc5cb677?cid=9bc1554456154afa94303021a5915a10</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>https://api.spotify.com/v1/artists/5A9hqRsPjYVEmUrnyghqmI</td>
+      <td>5A9hqRsPjYVEmUrnyghqmI</td>
+      <td>The UMC's</td>
+      <td>artist</td>
+      <td>spotify:artist:5A9hqRsPjYVEmUrnyghqmI</td>
+      <td>https://open.spotify.com/artist/5A9hqRsPjYVEmUrnyghqmI</td>
+      <td>One To Grow On</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/5A9hqRsPjYVEmUrnyghqmI'}, 'href': 'https://api.spotify.com/v1/artists/5A9hqRsPjYVEmUrnyghqmI', 'id': '5A9hqRsPjYVEmUrnyghqmI', 'name': 'The UMC's', 'type': 'artist', 'uri': 'spotify:artist:5A9hqRsPjYVEmUrnyghqmI'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/5dIyB4TR4EwENBNS3P0GoN'}, 'href': 'https://api.spotify.com/v1/albums/5dIyB4TR4EwENBNS3P0GoN', 'id': '5dIyB4TR4EwENBNS3P0GoN', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273be5283d5c15407910ec32a67', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02be5283d5c15407910ec32a67', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851be5283d5c15407910ec32a67', 'width': 64}], 'name': 'Fruits Of Nature', 'release_date': '1991', 'release_date_precision': 'year', 'total_tracks': 14, 'type': 'album', 'uri': 'spotify:album:5dIyB4TR4EwENBNS3P0GoN'}</td>
+      <td>4fIPDdLhHyFNqwLikwceVw</td>
+      <td>213400</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>https://api.spotify.com/v1/artists/5iRM7qYip6UNfQaPe2reCz</td>
+      <td>5iRM7qYip6UNfQaPe2reCz</td>
+      <td>Barney Artist</td>
+      <td>artist</td>
+      <td>spotify:artist:5iRM7qYip6UNfQaPe2reCz</td>
+      <td>https://open.spotify.com/artist/5iRM7qYip6UNfQaPe2reCz</td>
+      <td>93</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/5iRM7qYip6UNfQaPe2reCz'}, 'href': 'https://api.spotify.com/v1/artists/5iRM7qYip6UNfQaPe2reCz', 'id': '5iRM7qYip6UNfQaPe2reCz', 'name': 'Barney Artist', 'type': 'artist', 'uri': 'spotify:artist:5iRM7qYip6UNfQaPe2reCz'}, {'external_urls': {'spotify': 'https://open.spotify.com/artist/1y71H4hNtnHG7LeU1Y47FO'}, 'href': 'https://api.spotify.com/v1/artists/1y71H4hNtnHG7LeU1Y47FO', 'id': '1y71H4hNtnHG7LeU1Y47FO', 'name': 'Mr Jukes', 'type': 'artist', 'uri': 'spotify:artist:1y71H4hNtnHG7LeU1Y47FO'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/03MwMSmZU4Sj1uuxEKDATS'}, 'href': 'https://api.spotify.com/v1/albums/03MwMSmZU4Sj1uuxEKDATS', 'id': '03MwMSmZU4Sj1uuxEKDATS', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2731d795e7bb585fef914b5c56b', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e021d795e7bb585fef914b5c56b', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048511d795e7bb585fef914b5c56b', 'width': 64}], 'name': '93', 'release_date': '2022-05-25', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:03MwMSmZU4Sj1uuxEKDATS'}</td>
+      <td>15sxM45PYiyOKk64nxCvbK</td>
+      <td>166066</td>
+      <td>46</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>https://api.spotify.com/v1/artists/1y71H4hNtnHG7LeU1Y47FO</td>
+      <td>1y71H4hNtnHG7LeU1Y47FO</td>
+      <td>Mr Jukes</td>
+      <td>artist</td>
+      <td>spotify:artist:1y71H4hNtnHG7LeU1Y47FO</td>
+      <td>https://open.spotify.com/artist/1y71H4hNtnHG7LeU1Y47FO</td>
+      <td>93</td>
+      <td>{'album_type': 'single', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/5iRM7qYip6UNfQaPe2reCz'}, 'href': 'https://api.spotify.com/v1/artists/5iRM7qYip6UNfQaPe2reCz', 'id': '5iRM7qYip6UNfQaPe2reCz', 'name': 'Barney Artist', 'type': 'artist', 'uri': 'spotify:artist:5iRM7qYip6UNfQaPe2reCz'}, {'external_urls': {'spotify': 'https://open.spotify.com/artist/1y71H4hNtnHG7LeU1Y47FO'}, 'href': 'https://api.spotify.com/v1/artists/1y71H4hNtnHG7LeU1Y47FO', 'id': '1y71H4hNtnHG7LeU1Y47FO', 'name': 'Mr Jukes', 'type': 'artist', 'uri': 'spotify:artist:1y71H4hNtnHG7LeU1Y47FO'}], 'available_markets': ['AD', 'AE', 'AG', 'AL', 'AM', 'AO', 'AR', 'AT', 'AU', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BN', 'BO', 'BR', 'BS', 'BT', 'BW', 'BZ', 'CA', 'CD', 'CG', 'CH', 'CI', 'CL', 'CM', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FJ', 'FM', 'FR', 'GA', 'GB', 'GD', 'GE', 'GH', 'GM', 'GN', 'GQ', 'GR', 'GT', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IN', 'IQ', 'IS', 'IT', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', ...], 'external_urls': {'spotify': 'https://open.spotify.com/album/03MwMSmZU4Sj1uuxEKDATS'}, 'href': 'https://api.spotify.com/v1/albums/03MwMSmZU4Sj1uuxEKDATS', 'id': '03MwMSmZU4Sj1uuxEKDATS', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2731d795e7bb585fef914b5c56b', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e021d795e7bb585fef914b5c56b', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048511d795e7bb585fef914b5c56b', 'width': 64}], 'name': '93', 'release_date': '2022-05-25', 'release_date_precision': 'day', 'total_tracks': 1, 'type': 'album', 'uri': 'spotify:album:03MwMSmZU4Sj1uuxEKDATS'}</td>
+      <td>15sxM45PYiyOKk64nxCvbK</td>
+      <td>166066</td>
+      <td>46</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>https://api.spotify.com/v1/artists/172WdsNGJYNNXVNQ1tXfrB</td>
+      <td>172WdsNGJYNNXVNQ1tXfrB</td>
+      <td>Ata Kak</td>
+      <td>artist</td>
+      <td>spotify:artist:172WdsNGJYNNXVNQ1tXfrB</td>
+      <td>https://open.spotify.com/artist/172WdsNGJYNNXVNQ1tXfrB</td>
+      <td>Yemmpa Aba</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/172WdsNGJYNNXVNQ1tXfrB'}, 'href': 'https://api.spotify.com/v1/artists/172WdsNGJYNNXVNQ1tXfrB', 'id': '172WdsNGJYNNXVNQ1tXfrB', 'name': 'Ata Kak', 'type': 'artist', 'uri': 'spotify:artist:172WdsNGJYNNXVNQ1tXfrB'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/5rWdCCXgUf8Ptz1goEmLKC'}, 'href': 'https://api.spotify.com/v1/albums/5rWdCCXgUf8Ptz1goEmLKC', 'id': '5rWdCCXgUf8Ptz1goEmLKC', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b27348c5486d7aca8895b22edfb1', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e0248c5486d7aca8895b22edfb1', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d0000485148c5486d7aca8895b22edfb1', 'width': 64}], 'name': 'Obaa Sima', 'release_date': '2015-03-03', 'release_date_precision': 'day', 'total_tracks': 7, 'type': 'album', 'uri': 'spotify:album:5rWdCCXgUf8Ptz1goEmLKC'}</td>
+      <td>1RENxgc4udMBGukDfgGt6K</td>
+      <td>270466</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>https://api.spotify.com/v1/artists/7tr837m0bWZnXajwk9XqJI</td>
+      <td>7tr837m0bWZnXajwk9XqJI</td>
+      <td>Volta Jazz</td>
+      <td>artist</td>
+      <td>spotify:artist:7tr837m0bWZnXajwk9XqJI</td>
+      <td>https://open.spotify.com/artist/7tr837m0bWZnXajwk9XqJI</td>
+      <td>Djougou Toro</td>
+      <td>{'album_type': 'compilation', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/0LyfQWJT6nXafLPZqxe9Of'}, 'href': 'https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of', 'id': '0LyfQWJT6nXafLPZqxe9Of', 'name': 'Various Artists', 'type': 'artist', 'uri': 'spotify:artist:0LyfQWJT6nXafLPZqxe9Of'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/4tGlp1d3Lv1e1EezFKFmyB'}, 'href': 'https://api.spotify.com/v1/albums/4tGlp1d3Lv1e1EezFKFmyB', 'id': '4tGlp1d3Lv1e1EezFKFmyB', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273a6a196ca06f13ebc35625bec', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02a6a196ca06f13ebc35625bec', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851a6a196ca06f13ebc35625bec', 'width': 64}], 'name': 'Bobo Yéyé: Belle Époque in Upper Volta', 'release_date': '2016-10-28', 'release_date_precision': 'day', 'total_tracks': 37, 'type': 'album', 'uri': 'spotify:album:4tGlp1d3Lv1e1EezFKFmyB'}</td>
+      <td>6D6ApezZFMizttNt5QXCIr</td>
+      <td>330306</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>https://api.spotify.com/v1/artists/66DQqgrnN1Tfr3e8ChRCw3</td>
+      <td>66DQqgrnN1Tfr3e8ChRCw3</td>
+      <td>Ayalew Mesfin</td>
+      <td>artist</td>
+      <td>spotify:artist:66DQqgrnN1Tfr3e8ChRCw3</td>
+      <td>https://open.spotify.com/artist/66DQqgrnN1Tfr3e8ChRCw3</td>
+      <td>Hasabe (My Worries)</td>
+      <td>{'album_type': 'album', 'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/66DQqgrnN1Tfr3e8ChRCw3'}, 'href': 'https://api.spotify.com/v1/artists/66DQqgrnN1Tfr3e8ChRCw3', 'id': '66DQqgrnN1Tfr3e8ChRCw3', 'name': 'Ayalew Mesfin', 'type': 'artist', 'uri': 'spotify:artist:66DQqgrnN1Tfr3e8ChRCw3'}], 'available_markets': [], 'external_urls': {'spotify': 'https://open.spotify.com/album/53KC69IPtUPXpcTVPF25Z0'}, 'href': 'https://api.spotify.com/v1/albums/53KC69IPtUPXpcTVPF25Z0', 'id': '53KC69IPtUPXpcTVPF25Z0', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273b0a585dd1fdf998df54accea', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02b0a585dd1fdf998df54accea', 'width': 300}, {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851b0a585dd1fdf998df54accea', 'width': 64}], 'name': 'Hasabe (My Worries)', 'release_date': '2018-01-23', 'release_date_precision': 'day', 'total_tracks': 11, 'type': 'album', 'uri': 'spotify:album:53KC69IPtUPXpcTVPF25Z0'}</td>
+      <td>5TxuQrXbWo1GCLoGAmwOQh</td>
+      <td>236173</td>
+      <td>0</td>
+      <td>None</td>
+      <td>https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4</td>
+      <td><img src="https://i.scdn.co/image/ab67616d0000b273f48358466b52e772be89afa4" style="max-height:124px;"><img src="" style="max-height:124px;"></td>
+    </tr>
+  </tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
